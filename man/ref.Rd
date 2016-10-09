@@ -31,6 +31,6 @@ saproj::ref("lichist", version = "0.1.5", projdir = "test-dir")
 }
 \seealso{
 Other functions.for.making.directories.and.files: \code{\link{new_project}},
-  \code{\link{section}}
+  \code{\link{new_section}}
 }
 

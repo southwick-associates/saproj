@@ -1,9 +1,9 @@
-The package "saproj" was used to create folders/files for this project
-and automate script execution. R scripts were sourced from code/run.R
+"saproj::new_project()" was run to initialize folders/files for this project.
 
 Folders:
-- code/   R scripts
 - data/   Data used for analysis
-- doc/    R script output (i.e., log files)
 - out/    Results
 - ref/    Packages used in project that aren't available on CRAN
+
+Storing R code:
+Use "saproj::new_section()" to setup a location for R

@@ -35,9 +35,9 @@ new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
 #' @export
 #' @examples
 #' saproj::new_project(projdir = "test-dir")
-#' saproj::section("1-first-section", projdir = "test-dir")
-section <- function(title, projdir = NULL) {
-    dir_create(file.path("code", title), projdir)
+#' saproj::new_section("1-first-section", projdir = "test-dir")
+new_section <- function(title, projdir = NULL) {
+    dir_create(title, projdir)
     dir_create(file.path("data", title), projdir)
     dir_create(file.path("doc", title), projdir)
     dir_create(file.path("out", title), projdir)

@@ -26,7 +26,7 @@ Populate a project with default directories and files
 saproj::new_project(projdir = "test-dir")
 }
 \seealso{
-Other functions.for.making.directories.and.files: \code{\link{ref}},
-  \code{\link{section}}
+Other functions.for.making.directories.and.files: \code{\link{new_section}},
+  \code{\link{ref}}
 }
 
