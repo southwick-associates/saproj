@@ -1,0 +1,9 @@
+The package "saproj" was used to create folders/files for this project
+and automate script execution. R scripts were sourced from code/run.R
+
+Folders:
+- code/   R scripts
+- data/   Data used for analysis
+- doc/    R script output (i.e., log files)
+- out/    Results
+- ref/    Packages used in project that aren't available on CRAN

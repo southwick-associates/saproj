@@ -1,0 +1,17 @@
+Package: saproj
+Type: Package
+Title: Automate Common Project Tasks
+Version: 0.5.0
+Author: Dan Kary
+Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
+Description: Functions to (1) easily create project files and (2) source files
+    with output documentation.
+Depends:
+    R (>= 3.3.1)
+Imports:
+    rmarkdown (>= 1.0),
+    stringr (>= 1.0.0),
+    dplyr (>= 0.5.0)
+License: Doesn't really matter
+LazyData: TRUE
+RoxygenNote: 5.0.1
