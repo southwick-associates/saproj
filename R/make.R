@@ -5,31 +5,23 @@
 #' @param dat2 logical: If TRUE, make directory in dat_path2
 #' @param dat_path character: file path to optional dat directory
 #' @param dat_path2 character: file path to optional dat2 directory
-#' @param generic logical: If TRUE, generic README & run.R files are also
-#' created. Otherwise, these won't be created, allowing for automation of
-#' custom file creation
 #' @inheritParams file_copy
 #' @family functions for making directories and files
 #' @export
 #' @examples
-#' saproj::new(projdir = "test-dir")
-new <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
-                dat_path2 = "D:/SA/Data2", projdir = NULL, generic = TRUE) {
+#' saproj::new_project(projdir = "test-dir")
+new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
+                        dat_path2 = "D:/SA/Data2", projdir = NULL) {
     # directories
-    dir_create("code", projdir)
+    # dir_create("code", projdir) # probably will store code in parent
     dir_create("data", projdir)
     dir_create("doc", projdir)
     dir_create("out", projdir)
-    dir_create("ref", projdir)
+    # dir_create("ref", projdir) # probably only make this when needed
 
     # files
-    file_copy(system.file("rmd", "run.Rmd", package = "saproj"), "run.Rmd", projdir)
-    if (generic) {
-        file_copy(system.file("misc", "README", package = "saproj"),
-                  "README", projdir)
-        file_copy(system.file("misc", "run.R", package = "saproj"),
-                  file.path("code", "run.R"), projdir)
-    }
+    file_copy(system.file("misc", "README", package = "saproj"),
+              "README", projdir)
 
     # data directories (if specified)
     if (dat) make_dat(dat_path)
@@ -42,7 +34,7 @@ new <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
 #' @family functions for making directories and files
 #' @export
 #' @examples
-#' saproj::new(projdir = "test-dir")
+#' saproj::new_project(projdir = "test-dir")
 #' saproj::section("1-first-section", projdir = "test-dir")
 section <- function(title, projdir = NULL) {
     dir_create(file.path("code", title), projdir)
@@ -64,7 +56,7 @@ section <- function(title, projdir = NULL) {
 #' @family functions for making directories and files
 #' @export
 #' @examples
-#' saproj::new(projdir = "test-dir")
+#' saproj::new_project(projdir = "test-dir")
 #' saproj::ref("lichist", projdir = "test-dir")
 #' saproj::ref("lichist", version = "0.1.5", projdir = "test-dir")
 ref <- function(pkg, pkg_dir = "D:/SA/Project_DK/R", version = NULL,

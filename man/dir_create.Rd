@@ -25,7 +25,7 @@ dir_create("test-dir")
 dir_create("test-dir", projdir = "proj-dir")
 }
 \seealso{
-Other helper functions for making directories and files: \code{\link{file_copy}},
+Other helper.functions.for.making.directories.and.files: \code{\link{file_copy}},
   \code{\link{make_dat}}
 }
 

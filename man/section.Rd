@@ -16,11 +16,11 @@ testing. If NULL, the working directory will be used}
 Create a new sub-directory for R scripts, docs, etc.
 }
 \examples{
-saproj::new(projdir = "test-dir")
+saproj::new_project(projdir = "test-dir")
 saproj::section("1-first-section", projdir = "test-dir")
 }
 \seealso{
-Other functions for making directories and files: \code{\link{new}},
+Other functions.for.making.directories.and.files: \code{\link{new_project}},
   \code{\link{ref}}
 }
 

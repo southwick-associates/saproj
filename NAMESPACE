@@ -3,7 +3,6 @@
 export(dir_create)
 export(file_copy)
 export(make_dat)
-export(new)
+export(new_project)
 export(ref)
-export(rmd)
 export(section)
