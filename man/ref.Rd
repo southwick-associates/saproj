@@ -2,10 +2,9 @@
 % Please edit documentation in R/make.R
 \name{ref}
 \alias{ref}
-\title{Copy selected package (zipfile) to a directory}
+\title{Copy selected package (zipfile) to "ref" directory}
 \usage{
-ref(pkg, pkg_dir = "D:/SA/Project_DK/R", version = NULL, ref_dir = "ref",
-  projdir = NULL)
+ref(pkg, pkg_dir = "D:/SA/Project_DK/R", version = NULL, projdir = NULL)
 }
 \arguments{
 \item{pkg}{character: Name of package to copy}
@@ -15,14 +14,12 @@ ref(pkg, pkg_dir = "D:/SA/Project_DK/R", version = NULL, ref_dir = "ref",
 \item{version}{character: Optional version of package to copy. If NULL,
 the most recent version will be used}
 
-\item{ref_dir}{character: Name of directory where packages will be stored}
-
 \item{projdir}{character: Subdirectory to place folders/files, intended for
 testing. If NULL, the working directory will be used}
 }
 \description{
-Intended to store install files for packages that aren't on CRAN.
-This function automates storing these files for convenience
+Insures that packages not on CRAN are stored locally if the workflow needs
+to be rerun. This function automates that process.
 }
 \examples{
 saproj::new_project(projdir = "test-dir")

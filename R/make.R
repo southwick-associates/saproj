@@ -43,15 +43,14 @@ new_section <- function(title, projdir = NULL) {
     dir_create(file.path("out", title), projdir)
 }
 
-#' Copy selected package (zipfile) to a directory
+#' Copy selected package (zipfile) to "ref" directory
 #'
-#' Intended to store install files for packages that aren't on CRAN.
-#' This function automates storing these files for convenience
+#' Insures that packages not on CRAN are stored locally if the workflow needs
+#' to be rerun. This function automates that process.
 #' @param pkg character: Name of package to copy
 #' @param pkg_dir character: path to directory holding package zipfiles
 #' @param version character: Optional version of package to copy. If NULL,
 #' the most recent version will be used
-#' @param ref_dir character: Name of directory where packages will be stored
 #' @inheritParams file_copy
 #' @family functions for making directories and files
 #' @export
@@ -60,8 +59,8 @@ new_section <- function(title, projdir = NULL) {
 #' saproj::ref("lichist", projdir = "test-dir")
 #' saproj::ref("lichist", version = "0.1.5", projdir = "test-dir")
 ref <- function(pkg, pkg_dir = "D:/SA/Project_DK/R", version = NULL,
-                ref_dir = "ref", projdir = NULL) {
-    # get file path
+                projdir = NULL) {
+    # get file path (with appropriate version)
     f <- list.files(pkg_dir)
     f <- f[stringr::str_detect(f, ".zip")]
     if (is.null(version)) {
@@ -72,6 +71,6 @@ ref <- function(pkg, pkg_dir = "D:/SA/Project_DK/R", version = NULL,
     }
 
     # copy to selected directory
-    dir_create(ref_dir, projdir)
-    file_copy(file.path(pkg_dir, f[1]), file.path(ref_dir, f[1]), projdir)
+    dir_create("ref", projdir)
+    file_copy(file.path(pkg_dir, f[1]), file.path("ref", f[1]), projdir)
 }
