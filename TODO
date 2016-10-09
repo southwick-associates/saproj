@@ -1,6 +1,5 @@
 
 Reorganize & change:
-- remove print functions (use Rmd for annotated output)
 - change existing functions to match the plans below
 
 - (probably) store code in top-level directories
