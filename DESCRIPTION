@@ -4,8 +4,8 @@ Title: Automate Common Project Tasks
 Version: 0.5.0
 Author: Dan Kary
 Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
-Description: Functions to (1) easily create project files and (2) source files
-    with output documentation.
+Description: Provides functions & file templates to automate R-based Southwick 
+projects.
 Depends:
     R (>= 3.3.1)
 Imports:
