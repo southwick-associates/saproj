@@ -1,4 +1,15 @@
 
-Todo:
-- work on package lichist in order to make files and paths specific to license
-  data projects
+Reorganize & change:
+- remove print functions (use Rmd for annotated output)
+- change existing functions to match the plans below
+
+- (probably) store code in top-level directories
+  this allows for less file navigation (particularly backwards in Rmd)
+- make an Rmd template
+- (maybe) allow user to store SA package location (in synced O365 folder)
+  - potentially even prompt the user to store this on install
+- write vignette
+  - philosophy behind saproj
+  - starting a project (files that get created)
+  - making a section
+  - working form Rmd vs R scripts
