@@ -2,11 +2,20 @@
 Reorganize & change:
 - change existing functions to match the plans below
 
-- make an Rmd template
+- (maybe) make an Rmd template - not certain this is necessary
 - (maybe) allow user to store SA package location (in synced O365 folder)
   - potentially even prompt the user to store this on install
+
 - write vignette
+  - R Prerequisites
+    - Basics
+    - Rstudio
+    - RMarkdown
   - philosophy behind saproj
-  - starting a project (files that get created)
+  - starting a project (files/folders that get created)
+  - Reasoning for directory structure
+  - example projects
+    - a minimal example (load, clean, do)
+    - a more complex example (1-prep, 2-profiles, 3-results)
   - making a section
   - working form Rmd vs R scripts
