@@ -28,7 +28,7 @@ new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
     if (dat2) make_dat(dat_path2)
 }
 
-#' Create a new sub-directory for R scripts, docs, etc.
+#' Create a new sub-directory for R code, data, and output
 #' @param title character: Name of sub-directory to create
 #' @inheritParams file_copy
 #' @family functions for making directories and files

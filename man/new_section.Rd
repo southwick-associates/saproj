@@ -2,7 +2,7 @@
 % Please edit documentation in R/make.R
 \name{new_section}
 \alias{new_section}
-\title{Create a new sub-directory for R scripts, docs, etc.}
+\title{Create a new sub-directory for R code, data, and output}
 \usage{
 new_section(title, projdir = NULL)
 }
@@ -13,7 +13,7 @@ new_section(title, projdir = NULL)
 testing. If NULL, the working directory will be used}
 }
 \description{
-Create a new sub-directory for R scripts, docs, etc.
+Create a new sub-directory for R code, data, and output
 }
 \examples{
 saproj::new_project(projdir = "test-dir")

@@ -35,34 +35,32 @@ To begin analysis on a Project:
 
 1. Create a new project in RStudio by clicking *File > New Project* (see [RStudio Projects](http://r4ds.had.co.nz/workflow-projects.html) for an introduction).
 
-2. Run `saproj::new_project` from the console. This creates default files & folders, along with a README (which should be updated as the analysis progresses).
+2. Run `saproj::new_project` from the console. This creates default files & folders, along with a README (which you should update as the analysis progresses).
 
-todo - Insert a screenshot of the new project structure here.
+![](new-project-files.png)
 
 Using this simple directory structure is useful because it:
 
 - Scales well; accomodating both simple and complex analyses.
 - Provides a familiar format, which facilitates collaboration.
-- Encapsulates all the necessary parts of an analysis workflow (data, scripts, outputs).
+- Encapsulates all the necessary parts of an analysis workflow (scripts, data, outputs).
 
 ## Simple Example Project
 
 Entire analysis in 3 scripts:
 
-- 1-load.Rmd
-- 2-clean.Rmd
-- 3-do.Rmd
-
-Todo:
-
-- See about providing some sample data
-- Maybe loading SPSS sav files using haven package
+- code
+    + 1-load.Rmd
+    + 2-clean.Rmd
+    + 3-do.Rmd
 
 ## More Complex Example Project
 
-Organizing scripts in folders:
+Organizing scripts in sub-folders:
 
-- 1-prep
-- 2-profiles
-- 3-results
+- code
+    + 1-prep
+    + 2-profiles
+    + 3-results
 
+Making sections can be automated using `saproj::new_section`
