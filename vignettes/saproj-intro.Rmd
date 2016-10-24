@@ -28,7 +28,21 @@ Familiarity with a few topics is required to use `saproj` effectively:
 
 ## Starting a Project
 
-Provide some info about directory structure and a simple function for setting up folders/files for a new project.
+To begin analysis on a Project:
+
+1. Create a new project in RStudio by clicking *File > New Project* (see [RStudio Projects](http://r4ds.had.co.nz/workflow-projects.html) for an introduction).
+
+2. Run `saproj::new_project` from the Console. This will create a set of folders & files like those shown below.
+
+Dan note - Insert a screenshot of the new project structure here
+
+A template directory structure is useful...
+
+code/
+data/
+out/
+    template.Rmd
+README
 
 ### Directory Structure 
 
