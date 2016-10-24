@@ -21,7 +21,7 @@ new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
 
     # files
     file_copy(system.file("misc", "README", package = "saproj"),
-              "README", projdir)
+              "README.txt", projdir)
 
     # data directories (if specified)
     if (dat) make_dat(dat_path)
