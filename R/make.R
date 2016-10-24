@@ -13,9 +13,9 @@
 new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
                         dat_path2 = "D:/SA/Data2", projdir = NULL) {
     # directories
-    # dir_create("code", projdir) # probably will store code in parent
+    dir_create("code", projdir)
     dir_create("data", projdir)
-    dir_create("doc", projdir)
+    # dir_create("doc", projdir) # probably won't take this approach generally
     dir_create("out", projdir)
     # dir_create("ref", projdir) # probably only make this when needed
 

@@ -11,17 +11,20 @@ vignette: >
 
 The `saproj` package has two basic purposes:
 
-1. Presenting guidelines for organizing R-based analyses.
-2. Providing a way to automate the creation of project folders/files within these guidelines.
+1. Present guidelines for organizing R-based analyses.
+
+2. Provide a way to automate the creation of project folders & files that follow these guidelines.
 
 ## R Prerequisites
 
-Familiarity with a few topics is required to use `saproj` effectively:
+Familiarity with a few topics is needed for using `saproj` effectively:
 
-- [R Basics](https://www.rstudio.com/online-learning/#R). The [Base R Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf) provides a very nice reference.
+**Required**
+
+- [R Basics](https://www.rstudio.com/online-learning/#R). The [Base R Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf) provides a nice reference.
 - Familiarity with the [tidyverse](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/) generally and [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) in particular
 
-### Recommended
+**Recommended**
 
 - [RMarkdown](http://rmarkdown.rstudio.com/lesson-1.html) for a notebook interface and convenient analysis documentation
 - [R for Data Science](http://r4ds.had.co.nz/) for further reading
@@ -32,23 +35,17 @@ To begin analysis on a Project:
 
 1. Create a new project in RStudio by clicking *File > New Project* (see [RStudio Projects](http://r4ds.had.co.nz/workflow-projects.html) for an introduction).
 
-2. Run `saproj::new_project` from the Console. This will create a set of folders & files like those shown below.
+2. Run `saproj::new_project` from the console. This creates default files & folders, along with a README (which should be updated as the analysis progresses).
 
-Dan note - Insert a screenshot of the new project structure here
+todo - Insert a screenshot of the new project structure here.
 
-A template directory structure is useful...
+Using this simple directory structure is useful because it:
 
-code/
-data/
-out/
-    template.Rmd
-README
+- Scales well; accomodating both simple and complex analyses.
+- Provides a familiar format, which facilitates collaboration.
+- Encapsulates all the necessary parts of an analysis workflow (data, scripts, outputs).
 
-### Directory Structure 
-
-## Example Projects
-
-### A minimal example 
+## A Simple Example Project
 
 - See about providing some sample data (probably just use the data in the tablr package). 
 - It would also be useful to load data using haven (I probably will want to deprecate tablr usage)

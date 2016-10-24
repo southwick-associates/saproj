@@ -1,9 +1,5 @@
-"saproj::new_project()" was run to initialize folders/files for this project.
 
 Folders:
-- data/   Data used for analysis
-- out/    Results
-- ref/    Packages used in project that aren't available on CRAN
-
-Storing R code:
-Use "saproj::new_section()" to setup a location for R
+- code/   Code that runs analysis
+- data/   Data input
+- out/    Results output
