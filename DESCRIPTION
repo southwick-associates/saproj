@@ -1,7 +1,7 @@
 Package: saproj
 Type: Package
 Title: Automate Common Project Tasks
-Version: 1.0
+Version: 1.1
 Author: Dan Kary
 Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
 Description: Provides functions & file templates to automate R-based Southwick 

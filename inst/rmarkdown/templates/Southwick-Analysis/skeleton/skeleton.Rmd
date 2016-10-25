@@ -1,5 +1,5 @@
 ---
-title: "License Summary Template"
+title: "Untitled"
 date: '`r strftime(Sys.time(), format = "%B %d, %Y")`'
 output: 
     html_document:
@@ -7,17 +7,6 @@ output:
         toc_float: true
         code_folding: show
 ---
-
-<!-- Allows wrapping in wide output (e.g., license sales by year) --> 
-<style>
-pre {
-  overflow-x: auto;
-}
-pre code {
-  word-wrap: normal;
-  white-space: pre;
-}
-</style>
 
 ```{r setup, message=FALSE}
 library(dplyr)

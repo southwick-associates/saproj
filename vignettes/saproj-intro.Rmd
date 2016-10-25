@@ -53,6 +53,10 @@ Entire analysis in 3 scripts:
     + 1-load.Rmd
     + 2-clean.Rmd
     + 3-do.Rmd
+    
+You can use R Markdown templates from `saproj` when creating a new R Markdown document:
+
+![](rmarkdown-from-template.png)
 
 ## More Complex Example Project
 
