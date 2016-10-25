@@ -18,7 +18,7 @@ one level above the R project directory
 saproj::make_dat("D:/test")
 }
 \seealso{
-Other helper.functions.for.making.directories.and.files: \code{\link{dir_create}},
+Other helper functions for making directories and files: \code{\link{dir_create}},
   \code{\link{file_copy}}
 }
 

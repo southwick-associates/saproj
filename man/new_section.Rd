@@ -20,7 +20,7 @@ saproj::new_project(projdir = "test-dir")
 saproj::new_section("1-first-section", projdir = "test-dir")
 }
 \seealso{
-Other functions.for.making.directories.and.files: \code{\link{new_project}},
+Other functions for making directories and files: \code{\link{new_project}},
   \code{\link{ref}}
 }
 
