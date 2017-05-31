@@ -9,8 +9,16 @@ output:
 ---
 
 ```{r setup, message=FALSE}
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 knitr::opts_chunk$set(comment = NA)
 ```
 
+## Load
+
+## Prep
+
+## Do
+
+```{r}
+sessionInfo()
+```
