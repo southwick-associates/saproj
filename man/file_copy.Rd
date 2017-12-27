@@ -29,4 +29,3 @@ saproj::file_copy("test", "test2", projdir = "test-dir")
 Other helper functions for making directories and files: \code{\link{dir_create}},
   \code{\link{make_dat}}
 }
-

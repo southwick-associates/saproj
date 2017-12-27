@@ -2,8 +2,8 @@
 
 export(dir_create)
 export(file_copy)
+export(install_packages)
 export(make_dat)
 export(new_project)
 export(new_section)
 export(ref)
-export(rmd)

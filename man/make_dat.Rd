@@ -21,4 +21,3 @@ saproj::make_dat("D:/test")
 Other helper functions for making directories and files: \code{\link{dir_create}},
   \code{\link{file_copy}}
 }
-

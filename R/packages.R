@@ -2,12 +2,12 @@
 
 #' Install Packages from Repositories or Local Files
 #' 
-#' This is a wrapper for \code{\link[base]{install.packages}} that creates a record
+#' This is a wrapper for \code{\link[utils]{install.packages}} that creates a record
 #' of package installations. It always installs to the first argument of 
 #' \code{\link[base]{.libPaths}}, which should correspond to either a project-specific 
 #' or user library.
-#' @inheritParams base::install.packages
-#' @param ... Arguments passed to \code{\link[base]{install.packages}}
+#' @inheritParams utils::install.packages
+#' @param ... Arguments passed to \code{\link[utils]{install.packages}}
 #' @family functions for working with R packages
 #' @export
 #' @examples
