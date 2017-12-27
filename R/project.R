@@ -30,5 +30,6 @@ new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
     if (dat2) make_dat(dat_path2)
 }
 
-wrap_project() <- function() {}
-restore_project() <- function() {}
+# TODO - probably make [project]-snapshot.csv (next to [project]-install.R)
+wrap_project <- function() {}
+restore_project <- function() {}
