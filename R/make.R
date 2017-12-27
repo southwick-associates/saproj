@@ -1,34 +1,6 @@
 # functions to make directories and files
 
-# TODO - Maybe drop the dat, dat2 options
-#' Populate a project with default directories and files
-#' @param dat logical: If TRUE, make directory in dat_path
-#' @param dat2 logical: If TRUE, make directory in dat_path2
-#' @param dat_path character: file path to optional dat directory
-#' @param dat_path2 character: file path to optional dat2 directory
-#' @inheritParams file_copy
-#' @family functions for making directories and files
-#' @export
-#' @examples
-#' saproj::new_project(projdir = "test-dir")
-new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
-                        dat_path2 = "D:/SA/Data2", projdir = NULL) {
-    # directories
-    dir_create("code", projdir)
-    dir_create("data", projdir)
-    # dir_create("doc", projdir) # probably won't take this approach generally
-    dir_create("out", projdir)
-    # dir_create("ref", projdir) # probably only make this when needed
-
-    # files
-    file_copy(system.file("misc", "README", package = "saproj"),
-              "README.txt", projdir)
-
-    # data directories (if specified)
-    if (dat) make_dat(dat_path)
-    if (dat2) make_dat(dat_path2)
-}
-
+# TODO - maybe use dir.create instead of the helper function
 #' Create a new sub-directory for R code, data, and output
 #' @param title character: Name of sub-directory to create
 #' @inheritParams file_copy
@@ -45,6 +17,7 @@ new_section <- function(title, projdir = NULL) {
 }
 
 # TODO - change pkg_dir and copy to "pkg" directory (like R-Setup)
+# TODO - Actually this function maybe isn't needed
 #' Copy selected package (zipfile) to "ref" directory
 #'
 #' Insures that packages not on CRAN are stored locally if the workflow needs
