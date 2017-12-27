@@ -38,3 +38,6 @@ saproj::install_packages("acs")
 Install a local package
 saproj::install_packages("pkg/salic_0.3.4.zip", repos = NULL, type = "win.binary")
 }
+\seealso{
+Other functions for working with R packages: \code{\link{view_packages}}
+}

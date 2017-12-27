@@ -37,10 +37,48 @@ install_packages <- function(pkgs, ...) {
     if (!(sys_call %in% record_file)) {
         write(sys_call, record_filepath, append = TRUE)
     }
-    
 }
 
 # TODO - START HERE
-view_packages <- function() {}
+# might also call this function in the .Rprofile to show in Project Setup
+# or just reference it if there are any installed packages
+#' View packages installed in library
+#' 
+#' This is a quick way of looking at packages installed, particularly useful for a 
+#' project-specific library.
+#' @param library_path character: path to package library
+#' @family functions for working with R packages
+#' @export
+#' @examples
+#' view_packages()
+view_packages <- function(library_path = .libPaths()[1]) {
+    
+    # print library path
+    cat(paste0("\nPackage Library\n---------------\n", library_path, "\n\n\n"))
+    
+    # print contencts of record file (if it exists)
+    record_filepath <- paste0(library_path, "-install.R")
+        cat("Installation Record\n-------------------\n")
+    if (file.exists(record_filepath)) {
+        # doesn't work to store this in an object
+        writeLines(readLines(record_filepath))
+        cat("\n")
+    } else {
+        cat("[None]\n\n")
+    }
+    
+    # print installed packages (if any are installed)
+    pkg <- installed.packages(lib.loc = library_path)
+    pkg <- data.frame(pkg)
+    pkg <- pkg[c("Version")]
+    cat("\nInstalled Packages\n------------------\n")
+    if (nrow(pkg) > 1) {
+        print(pkg)
+    } else {
+        cat("[None]")
+    }
+}
 
+# TODO - probably just running [project]-install.R
+# maybe only useful for the wrap() > restore() workflow, so maybe not needed
 restore_packages <- function() {}
