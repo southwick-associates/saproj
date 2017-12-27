@@ -26,6 +26,7 @@ install_packages <- function(pkgs, ...) {
     # install packages
     utils::install.packages(pkgs = pkgs, lib = .libPaths()[1], ...)
     
+    # START HERE!!!
     # TODO - Need to insure this only runs if install.packages() is successful
     # maybe tryCatch() with stop on warning is an approach, need to investigate
     
@@ -67,7 +68,7 @@ view_packages <- function(library_path = .libPaths()[1]) {
     
     # print contencts of record file (if it exists)
     record_filepath <- paste0(library_path, "-install.R")
-        cat("Installation Record\n-------------------\n")
+        cat("--- Installation Record ---\n")
     if (file.exists(record_filepath)) {
         # doesn't work to store this in an object
         writeLines(readLines(record_filepath))
@@ -79,7 +80,7 @@ view_packages <- function(library_path = .libPaths()[1]) {
     pkg <- utils::installed.packages(lib.loc = library_path)
     pkg <- data.frame(pkg)
     pkg <- pkg[c("Version")]
-    cat("\nInstalled Packages\n------------------\n")
+    cat("\n--- Packages Installed ---\n")
     if (nrow(pkg) > 1) {
         print(pkg)
     } else {

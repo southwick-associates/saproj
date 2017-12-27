@@ -15,7 +15,7 @@ if (!dir.exists(proj_libpath)) dir.create(proj_libpath, recursive = T)
 .libPaths(proj_libpath)
 
 # Print Startup Message
-cat("\n--- Project Packages ---\n")
+cat("\nProject Packages\n----------------\n")
 saproj::view_packages(proj_libpath)
 
 # Print Warning if project R version doesn't match currently loaded R version
