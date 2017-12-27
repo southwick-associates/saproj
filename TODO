@@ -1,11 +1,4 @@
 
-Reorganize & change:
-- change existing functions to match the plans below
-
-- (maybe) make an Rmd template - not certain this is necessary
-- (maybe) allow user to store SA package location (in synced O365 folder)
-  - potentially even prompt the user to store this on install
-
-- write vignette
-    - See about providing some sample data
-    - Maybe loading SPSS sav files using haven package
+- update make.R functions
+- are make_help.R needed? maybe drop these
+- 

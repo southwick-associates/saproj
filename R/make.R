@@ -1,5 +1,6 @@
 # functions to make directories and files
 
+# TODO - Maybe drop the dat, dat2 options
 #' Populate a project with default directories and files
 #' @param dat logical: If TRUE, make directory in dat_path
 #' @param dat2 logical: If TRUE, make directory in dat_path2
@@ -43,6 +44,7 @@ new_section <- function(title, projdir = NULL) {
     dir_create(file.path("out", title), projdir)
 }
 
+# TODO - change pkg_dir and copy to "pkg" directory (like R-Setup)
 #' Copy selected package (zipfile) to "ref" directory
 #'
 #' Insures that packages not on CRAN are stored locally if the workflow needs
