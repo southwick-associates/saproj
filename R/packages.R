@@ -3,9 +3,9 @@
 #' Install Packages from Repositories or Local Files
 #' 
 #' This is a wrapper for \code{\link[utils]{install.packages}} that creates a record
-#' of package installations. It always installs to the first argument of 
+#' of package installations. It always installs to the first element of 
 #' \code{\link[base]{.libPaths}}, which should correspond to either a project-specific 
-#' or user library.
+#' or user library. You can check this by running .libPaths() in the console.
 #' @inheritParams utils::install.packages
 #' @param ... Arguments passed to \code{\link[utils]{install.packages}}
 #' @family functions for working with R packages
@@ -17,9 +17,20 @@
 #' Install a local package
 #' saproj::install_packages("pkg/salic_0.3.4.zip", repos = NULL, type = "win.binary")
 install_packages <- function(pkgs, ...) {
-   
+    
+    ### 1. install package(s)
+    
+    # setup error condition(s) to stop function execution
+    if (missing(pkgs)) stop("The 'pkgs' argument must be supplied", call. = TRUE)
+    
     # install packages
-    install.packages(pkgs = pkgs, lib = .libPaths()[1], ...)
+    utils::install.packages(pkgs = pkgs, lib = .libPaths()[1], ...)
+    
+    # TODO - Need to insure this only runs if install.packages() is successful
+    # maybe tryCatch() with stop on warning is an approach, need to investigate
+    
+    ### 2. modify the installation history in a record file
+    # the following should only run if utils::install.packages() completes successfully
     
     # define file location for package installation record
     record_filepath <- paste0(.libPaths()[1], "-install.R")
@@ -39,9 +50,6 @@ install_packages <- function(pkgs, ...) {
     }
 }
 
-# TODO - START HERE
-# might also call this function in the .Rprofile to show in Project Setup
-# or just reference it if there are any installed packages
 #' View packages installed in library
 #' 
 #' This is a quick way of looking at packages installed, particularly useful for a 
@@ -54,7 +62,8 @@ install_packages <- function(pkgs, ...) {
 view_packages <- function(library_path = .libPaths()[1]) {
     
     # print library path
-    cat(paste0("\nPackage Library\n---------------\n", library_path, "\n\n\n"))
+    # cat(paste0("\nPackage Library\n---------------\n", library_path, "\n\n\n"))
+    cat(paste0(library_path, "\n\n"))
     
     # print contencts of record file (if it exists)
     record_filepath <- paste0(library_path, "-install.R")
@@ -62,21 +71,21 @@ view_packages <- function(library_path = .libPaths()[1]) {
     if (file.exists(record_filepath)) {
         # doesn't work to store this in an object
         writeLines(readLines(record_filepath))
-        cat("\n")
     } else {
-        cat("[None]\n\n")
+        cat("[None]\n")
     }
     
     # print installed packages (if any are installed)
-    pkg <- installed.packages(lib.loc = library_path)
+    pkg <- utils::installed.packages(lib.loc = library_path)
     pkg <- data.frame(pkg)
     pkg <- pkg[c("Version")]
     cat("\nInstalled Packages\n------------------\n")
     if (nrow(pkg) > 1) {
         print(pkg)
     } else {
-        cat("[None]")
+        cat("[None]\n")
     }
+    cat("\n")
 }
 
 # TODO - probably just running [project]-install.R

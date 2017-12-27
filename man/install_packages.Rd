@@ -27,9 +27,9 @@ install_packages(pkgs, ...)
 }
 \description{
 This is a wrapper for \code{\link[utils]{install.packages}} that creates a record
-of package installations. It always installs to the first argument of 
+of package installations. It always installs to the first element of 
 \code{\link[base]{.libPaths}}, which should correspond to either a project-specific 
-or user library.
+or user library. You can check this by running .libPaths() in the console.
 }
 \examples{
 Install a CRAN package
