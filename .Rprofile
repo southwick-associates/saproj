@@ -1,4 +1,7 @@
-# Define project-specific package library & R Version
+# Defines project-specific package library & R Version
+
+# EDIT AT YOUR OWN RISK!!!
+# project parameters can be safely changed with saproj::update_project()
 
 local({
     
