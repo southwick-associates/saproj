@@ -66,7 +66,7 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     
     # define 5 possible comparison outcomes
     outcomes <- list(
-        neither = "No packages have been installed or recorded for this project.",
+        neither = "No project-specific packages have been installed or recorded.",
         same = "Snapshot is up-to-date with project library.",
         snapshot_behind = "Packages missing from snapshot: run 'saproj::snapshot_library()' to update.",
         library_behind = "Packages missing from project library: run 'saproj::restore_library()' to update.",
@@ -135,6 +135,35 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     }
     comparison_outcome
 }
+
+#' Convenience function to look at a package library
+#' 
+#' This is a quick way of looking at packages installed, particularly useful for a 
+#' project-specific library.
+#' @param library_path character: path to package library
+#' @family functions for maintaining project package libraries
+#' @export
+#' @examples
+#' view_library()
+view_library <- function(library_path = .libPaths()[1]) {
+    
+    # print library path
+    # cat(paste0("\nPackage Library\n---------------\n", library_path, "\n\n\n"))
+    cat(paste0(library_path, "\n\n"))
+    
+    # print installed packages (if any are installed)
+    pkg <- utils::installed.packages(lib.loc = library_path)
+    pkg <- data.frame(pkg)
+    pkg <- pkg[c("Version")]
+    cat("Packages Installed\n------------------\n")
+    if (nrow(pkg) > 1) {
+        print(pkg)
+    } else {
+        cat("[None]\n")
+    }
+    cat("\n")
+}
+
 
 # TODO - make this function
 restore_library <- function() {}

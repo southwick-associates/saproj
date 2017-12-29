@@ -12,21 +12,26 @@ proj_libname <- "southwick-packages"
 
 # Project-agnostic Setup Code ---------------------------------------------
 
-# Prepare Project Library
+# 1. Prepare Project Library
 proj_libpath <- file.path(Sys.getenv("R_HOME"), "project-library", proj_libname)
 if (!dir.exists(proj_libpath)) dir.create(proj_libpath, recursive = T)
 .libPaths(proj_libpath)
 
-# Print Startup Message
+# 2. Print Startup Message
+# which shows status of snapshot-library
 comparison_outcome <- saproj::compare_library_snapshot(proj_libpath)
 cat(paste0(
-    "Project Packages\n----------------\n",
-    proj_libpath, "\n\n",
+    "Project Package Library: '", proj_libname, "'\n",
     comparison_outcome[[1]], "\n\n"
 ))
-if (names(comparison_outcome[1]) != "neither") print(comparison_outcome[[2]])
 
-# Print Warning if project R version doesn't match currently loaded R version
+# show the detailed comparison if there is disagreement
+if (names(comparison_outcome[1]) %in% c("conflicts", "snapshot_behind", "library_behind")) {
+    df <- comparison_outcome[[2]]
+    print(df[df$in_library != df$in_snapshot,])
+}
+
+# 3. Print Warning if project R version doesn't match currently loaded R version
 r_current_version <- paste(R.version$major, R.version$minor, sep = ".")
 if (!(r_version == r_current_version)) {
     msg <- paste(

@@ -18,5 +18,6 @@ sync the installed library and it's snapshot.
 compare_library_snapshot()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{snapshot_library}}
+Other functions for maintaining project package libraries: \code{\link{snapshot_library}},
+  \code{\link{view_library}}
 }
