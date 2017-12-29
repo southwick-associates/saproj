@@ -1,6 +1,6 @@
 # functions for maintaining project package libraries
 
-# TODO - Make a simpler method of project library tracking using snapshot/restore
+# TODO - Modify this function to work with compare_library_snapshot()
 
 #' Create a snapshot (csv) of packages installed in project library
 #' 
@@ -30,6 +30,7 @@ snapshot_library <- function(proj_libpath = .libPaths()[1], resolve_conflicts = 
     read.csv("snapshot-library.csv")
 }
 
+# TODO - probably delete this
 # helper function to check project library and compare to snapshot
 view_library <- function(proj_libpath = .libPaths()[1]) {
     
@@ -48,54 +49,88 @@ view_library <- function(proj_libpath = .libPaths()[1]) {
     installed_packages
 }
 
-# START HERE
-# TODO - finish this function (output messages)
-
-# helper function to check project library and compare to snapshot
-# import dplyr
-compare_library_snapshot <- function(proj_libpath = .libPaths()[1], 
-                                     return_data_frame = FALSE) {
+# TODO - finish checking & make sure the @import works
+#' Compare installed project packages to snapshot-library.csv
+#' 
+#' The results of the comparison inform the recommendation for actions to 
+#' sync the installed library and it's snapshot.
+#' @param proj_libpath character The location of the project library (should use default)
+#' @family functions for maintaining project package libraries
+#' @import dplyr
+#' @export
+#' @examples
+#' compare_library_snapshot()
+compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     
-    # get installed packages
-    library_packages <- data.frame(utils::installed.packages(proj_libpath)) %>%
+    # define 5 possible comparison outcomes
+    outcomes <- list(
+        neither = "No packages have been installed or recorded for this project.",
+        same = "Snapshot is up-to-date with project library.",
+        snapshot_behind = "Packages missing from snapshot: run saproj::snapshot_library() to update.",
+        library_behind = "Packages missing from project library: run saproj::restore_library() to update.",
+        conflicts = paste(
+            "Warning: Your library snapshot conflicts with the installed project library.\n",
+            "To set a new library run\n",
+            "1. saproj::update_project(proj_library = 'your-new-library-name') &\n",
+            "2. saproj::restore_library()"
+        )
+    )
+ 
+    # get details about installed packages
+    library_df <- data.frame(utils::installed.packages(proj_libpath), stringsAsFactors = FALSE) %>%
         select(Package, Version) %>%
         mutate(in_library = TRUE)
-    if (nrow(library_packages) > 0) has_library = TRUE else has_library = FALSE
+    if (nrow(library_df) > 0) has_library = TRUE else has_library = FALSE
     
     # get current snapshot
-    if (file.exists("snapshot-library.csv")) has_snapshot = TRUE else has_snapshot = FALSE
-    snapshot_packages <- read.csv("snapshot-library.csv") %>%
-        mutate(in_snapshot = TRUE)
+    if (file.exists("snapshot-library.csv")) {
+        has_snapshot = TRUE
+        snapshot_df <- read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
+            mutate(in_snapshot = TRUE)
+    } else {
+        has_snapshot = FALSE
+    }
     
-    # produce comparison (difference) data frame
-    # based on 4 possible existence comparisons for library & snapshot
+    # produce comparison_outcome (list) that has two elements
+    # 1. selected outcome message from outcomes list above
+    # 2. data frame (compare_df) which shows the package-by-package comparison details
+    
+    # the data frame needs to be created by joining library_df & snapshot_df
+    # the join used depends on 4 possible existence comparisons for has_library & has_snapshot
     if (!has_library & !has_snapshot) {
-        # probably include an end condition here
-        print("Neither: no packages installed or recorded")
+        # no comparison data frame is needed in this case since the outcome is obvious 
+        # (i.e., no packages installed or recorded)
+        comparison_outcome <- outcomes[names(outcomes) == "neither"]
+        
+    # the comparison outcomes for these depend on compare_df
     } else if (has_library & has_snapshot) {
-        diff <- full_join(library_packages, snapshot_packages, by = c("Package", "Version"))
+        compare_df <- full_join(library_df, snapshot_df, by = c("Package", "Version")) %>%
+            mutate(
+                in_library = ifelse(is.na(in_library), FALSE, TRUE),
+                in_snapshot = ifelse(is.na(in_snapshot), FALSE, TRUE)
+            ) %>%
+            arrange(Package, Version)
     } else if (has_library & !has_snapshot) {
-        diff <- library_packages %>% mutate(in_snapshot = FALSE)
+        compare_df <- library_df %>% mutate(in_snapshot = FALSE)
     } else {
-        diff <- snapshot_packages %>% mutate(in_library = FALSE)
+        compare_df <- snapshot_df %>% mutate(in_library = FALSE)
     }
     
-    # output messages
-    diff <- filter(diff, in_library != in_snapshot)
-    if (nrow(diff) == 0) {
-        print("Snapshot is up-to-date with project library")
-    } else if (all(diff$in_snapshot)) {
-        print("Packages missing from snapshot: run saproj::snapshot_library() to update.")
-    } else if (all(diff$in_library)) {
-        print("Packages missing from project library: run saproj::restore_library() to update.")
-    } else {
-        print("Problem, Conflicts!!!!") # see text written down to fill this in
+    # look at compare_df to finish comparison
+    if (has_library | has_snapshot) {
+        diff <- filter(compare_df, in_library != in_snapshot)
+        if (nrow(diff) == 0) {
+            comparison_outcome <- outcomes[names(outcomes) == "same"]
+        } else if (all(diff$in_snapshot)) {
+            comparison_outcome <- outcomes[names(outcomes) == "library_behind"]
+        } else if (all(diff$in_library)) {
+            comparison_outcome <- outcomes[names(outcomes) == "snapshot_behind"]
+        } else {
+            comparison_outcome <- outcomes[names(outcomes) == "conflicts"]
+        }
+        comparison_outcome[["compare_df"]] <- compare_df
     }
-    print(diff)
-    
-    if (return_data_frame) {
-        diff
-    }
+    comparison_outcome
 }
 
 restore_library <- function() {}
