@@ -7,7 +7,8 @@
 compare_library_snapshot(proj_libpath = .libPaths()[1])
 }
 \arguments{
-\item{proj_libpath}{character The location of the project library (should use default)}
+\item{proj_libpath}{character: The location of the project library 
+(note: changing this argument is not recommended)}
 }
 \description{
 The results of the comparison inform the recommendation for actions to 
@@ -15,4 +16,7 @@ sync the installed library and it's snapshot.
 }
 \examples{
 compare_library_snapshot()
+}
+\seealso{
+Other functions for maintaining project package libraries: \code{\link{snapshot_library}}
 }

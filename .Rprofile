@@ -18,8 +18,13 @@ if (!dir.exists(proj_libpath)) dir.create(proj_libpath, recursive = T)
 .libPaths(proj_libpath)
 
 # Print Startup Message
-cat("\nProject Packages\n----------------\n")
-saproj::view_packages(proj_libpath)
+comparison_outcome <- saproj::compare_library_snapshot(proj_libpath)
+cat(paste0(
+    "Project Packages\n----------------\n",
+    proj_libpath, "\n\n",
+    comparison_outcome[[1]], "\n\n"
+))
+if (names(comparison_outcome[1]) != "neither") print(comparison_outcome[[2]])
 
 # Print Warning if project R version doesn't match currently loaded R version
 r_current_version <- paste(R.version$major, R.version$minor, sep = ".")

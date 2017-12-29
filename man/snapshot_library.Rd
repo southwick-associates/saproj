@@ -4,9 +4,20 @@
 \alias{snapshot_library}
 \title{Create a snapshot (csv) of packages installed in project library}
 \usage{
-snapshot_library(proj_libpath = .libPaths()[1], resolve_conflicts = FALSE)
+snapshot_library(proj_libpath = .libPaths()[1])
+}
+\arguments{
+\item{proj_libpath}{character: The location of the project library 
+(note: changing this argument is not recommended)}
 }
 \description{
 The snapshot improves project portability by storing details about installed
-packages. The project library can then be restored using \code{\link{restore_library}}
+packages. The project library can be restored on a different machine using 
+\code{\link{restore_library}}
+}
+\examples{
+saproj::snapshot_library()
+}
+\seealso{
+Other functions for maintaining project package libraries: \code{\link{compare_library_snapshot}}
 }

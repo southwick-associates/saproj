@@ -32,3 +32,16 @@ new_project <- function(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
     if (dat) make_dat(dat_path)
     if (dat2) make_dat(dat_path2)
 }
+
+# TODO - simple function for changing the 2 project parameters
+# NULL values inherit the existing proj_library & r_version
+# might be worthwhile to make a view_project() that shows these
+update_project <- function(proj_library = NULL, r_version = NULL) {
+    if (!is.null(r_version)) {
+        # update the version
+    }
+    
+    if (!is.null(proj_library)) {
+        # update the library
+    }
+}

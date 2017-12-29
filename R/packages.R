@@ -1,4 +1,5 @@
 # functions for working with R packages
+# TODO - probably remove both of these functions
 
 #' Install Packages from Repositories or Local Files
 #' 
@@ -88,7 +89,3 @@ view_packages <- function(library_path = .libPaths()[1]) {
     }
     cat("\n")
 }
-
-# TODO - probably just running [project]-install.R
-# maybe only useful for the wrap() > restore() workflow, so maybe not needed
-restore_packages <- function() {}
