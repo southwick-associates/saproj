@@ -164,6 +164,106 @@ view_library <- function(library_path = .libPaths()[1]) {
     cat("\n")
 }
 
+# START HERE
+# TODO Think about this a bit
+# - has this become too complicated?
+# - if yes > any ways to improve it?
 
-# TODO - make this function
-restore_library <- function() {}
+#' Restore a snapshot to a package library
+#' 
+#' This is largely a wrapper for \code{\link[versions]{install.versions}}. It only
+#' installs those snapshot packages not included in the library.
+#' @inheritParams snapshot_library
+#' @family functions for maintaining project package libraries
+#' @import dplyr
+#' @export
+#' @examples
+#' restore_library()
+restore_library <- function(proj_libpath = .libPaths()[1],
+                            override_version = FALSE) {
+    
+    # get comparison info on snapshot and package library
+    comparison_outcome <- compare_library_snapshot(proj_libpath)
+    
+    # define conditions based on 5 possible message outcomes
+    #   three alternatives below depending on comparison_outcome
+    #   note: this code is mostly the same as that for snapshot_library()
+    
+    # a. throw errors if there is a problem
+    if (names(comparison_outcome[1]) %in% c("conflicts", "snapshot_behind")) {
+        # print comparison_df to show differences
+        comparison_outcome[["compare_df"]] %>%
+            filter(in_library != in_snapshot) %>%
+            print()
+        stop(comparison_outcome[[1]])
+        
+    } else if (names(comparison_outcome[1]) == "neither") {
+        stop(comparison_outcome[[1]])
+        
+    # b. send a polite message of snapshot is already up-to-date
+    } else if (names(comparison_outcome[1]) == "same") {
+        cat(paste("No packages installed:", comparison_outcome[[1]], "\n\n"))
+        print(comparison_outcome[[2]])
+        
+    # c. library_behind: restore snapshot by installing to selected library
+    } else {
+        # get details about snapshot packages not currently installed
+        packages_to_install <- comparison_outcome[["compare_df"]] %>%
+            filter(!in_library) %>%
+            select(Package, Version) %>%
+            mutate(in_snapshot = TRUE)
+        
+        # pull available package list from repo (both binary and source types)
+        pkgs <- list(
+            available.packages(type = "source") %>% data.frame(stringsAsFactors = FALSE),
+            available.packages(type = "binary") %>% data.frame(stringsAsFactors = FALSE)
+        )
+        pkgs <- bind_rows(pkgs) %>%
+            filter(Package %in% packages_to_install$Package) %>%
+            select(Package, Version) %>%
+            mutate(in_repo = TRUE) %>%
+            distinct()
+        
+        # check to see if the snapshot versions are available
+        pkgs_install <- full_join(pkgs, packages_to_install, by = c("Package", "Version"))
+        
+        # if there are conflicts between repository and snapshot
+        if (any(is.na(pkgs_install$in_repo))) {
+            # get some details
+            x <- pkgs_install %>% filter(is.na(in_repo))
+            y <- pkgs_install %>% filter(Package %in% unique(x$Package))
+            
+            # don't install unless override_version == TRUE
+            if (override_version) {
+                # install anyway
+                install.packages(unique(pkgs_install$Package))
+                compare_library_snapshot()[[2]] # check after install
+                
+                # modify the snapshot
+                # this is a side-effect of the function (maybe not ideal)
+                z <- y %>% filter(in_repo) %>%
+                    select(Package, Version_new = Version)
+                read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
+                    left_join(z, by = "Package") %>%
+                    mutate(Version = ifelse(is.na(Version_new), Version, Version_new)) %>%
+                    select(-Version_new) %>%
+                    write.csv(file = "snapshot-library.csv", row.names = FALSE)
+                
+            } else {
+                # don't install packages and provide warning
+                warning(paste0(
+                    "One or more packages from the snapshot aren't available in the repository:\n",
+                    getOption("repos")[[1]], "\n\n",
+                    paste(capture.output(print(y)), collapse = "\n"),
+                    "\n\nRun 'restore_library()' again with 'override_version = TRUE'\n",
+                    "to install the repo-available version(s) instead."
+                ))
+            }
+        } else {
+            # install as usual since there aren't conflicts
+            install.packages(unique(pkgs_install$Package))
+            compare_library_snapshot()[[2]] # check after install
+        }
+    }
+}
+

@@ -1,2 +1,3 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^snapshot-library\.csv$ # a file that might be produced during testing

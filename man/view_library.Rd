@@ -18,5 +18,6 @@ view_library()
 }
 \seealso{
 Other functions for maintaining project package libraries: \code{\link{compare_library_snapshot}},
+  \code{\link{restore_library}},
   \code{\link{snapshot_library}}
 }
