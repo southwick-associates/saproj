@@ -12,7 +12,7 @@ snapshot_library(proj_libpath = .libPaths()[1], replace_snapshot = FALSE)
 
 \item{replace_snapshot}{logical: If TRUE, any existing snapshot will be removed
 and a snapshot will be created based on the current project library
-if any packages are installed.}
+(if any packages are installed).}
 }
 \description{
 The snapshot improves project portability by storing details about installed

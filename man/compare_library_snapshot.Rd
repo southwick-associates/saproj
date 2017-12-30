@@ -11,8 +11,8 @@ compare_library_snapshot(proj_libpath = .libPaths()[1])
 (note: changing this argument is not recommended)}
 }
 \description{
-The results of the comparison inform the recommendation for actions to 
-sync the installed library and it's snapshot.
+The results of the comparison inform the recommendation for actions in
+syncing the package library and it's snapshot.
 }
 \examples{
 compare_library_snapshot()
