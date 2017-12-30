@@ -171,8 +171,7 @@ view_library <- function(library_path = .libPaths()[1]) {
 
 #' Restore a snapshot to a package library
 #' 
-#' This is largely a wrapper for \code{\link[versions]{install.versions}}. It only
-#' installs those snapshot packages not included in the library.
+#' This installs only those snapshot packages not included in the library.
 #' @inheritParams snapshot_library
 #' @family functions for maintaining project package libraries
 #' @import dplyr

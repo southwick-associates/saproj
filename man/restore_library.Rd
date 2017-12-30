@@ -11,8 +11,7 @@ restore_library(proj_libpath = .libPaths()[1], override_version = FALSE)
 (note: changing this argument is not recommended)}
 }
 \description{
-This is largely a wrapper for \code{\link[versions]{install.versions}}. It only
-installs those snapshot packages not included in the library.
+This installs only those snapshot packages not included in the library.
 }
 \examples{
 restore_library()
