@@ -2,7 +2,7 @@
 % Please edit documentation in R/project-library.R
 \name{compare_library_snapshot}
 \alias{compare_library_snapshot}
-\title{Compare installed project packages to snapshot-library.csv}
+\title{Convenience function to compare installed project packages to snapshot-library.csv}
 \usage{
 compare_library_snapshot(proj_libpath = .libPaths()[1])
 }

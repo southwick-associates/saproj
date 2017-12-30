@@ -1,5 +1,26 @@
 # functions for maintaining project package libraries
 
+# A helper function for use in snapshot_library() and restore_library()
+# It is used to throw and error based on value returned by compare_library_snapshot()
+# The 'allowed_outcome' is used to indicate when a function should be run:
+#   check_snapshot_restore(proj_libpath, "snapshot_behind") for snapshot_library()
+#   check_snapshot_restore(proj_libpath, "library_behind") for restore_library()
+check_snapshot_restore <- function(proj_libpath = .libPaths()[1], allowed_outcome = "snapshot_behind") {
+    
+    # get comparison info on snapshot and package library
+    comparison_outcome <- compare_library_snapshot(proj_libpath)
+    
+    # stop with error messsage if different from the allowed outcome
+    if (!(names(comparison_outcome[1]) %in% allowed_outcome)) {
+        # also show the comparison data frame if it exists
+        if (length(comparison_outcome) == 2) print(comparison_outcome[[2]])
+        stop(comparison_outcome[[1]], call. = FALSE)
+    }
+    
+    # return comparison_outcome
+    comparison_outcome
+}
+
 #' Create a snapshot (csv) of packages installed in project library
 #' 
 #' The snapshot improves project portability by storing details about installed
@@ -7,52 +28,52 @@
 #' \code{\link{restore_library}}
 #' @param proj_libpath character: The location of the project library 
 #' (note: changing this argument is not recommended)
+#' @param replace_snapshot logical: If TRUE, any existing snapshot will be removed
+#' and a snapshot will be created based on the current project library
+#' if any packages are installed.
 #' @family functions for maintaining project package libraries
 #' @import dplyr
 #' @export
 #' @examples
 #' saproj::snapshot_library()
-snapshot_library <- function(proj_libpath = .libPaths()[1]) {
+snapshot_library <- function(proj_libpath = .libPaths()[1], replace_snapshot = FALSE) {
     
-    # get comparison info on snapshot and package library
-    comparison_outcome <- compare_library_snapshot(proj_libpath)
-    
-    # define conditions based on 5 possible message outcomes
-    #   three alternatives below depending on comparison_outcome
-    
-    # a. throw errors if there is a problem
-    if (names(comparison_outcome[1]) %in% c("conflicts", "library_behind")) {
-        # print comparison_df to show differences
-        comparison_outcome[["compare_df"]] %>%
-            filter(in_library != in_snapshot) %>%
-            print()
-        stop(comparison_outcome[[1]])
-        
-    } else if (names(comparison_outcome[1]) == "neither") {
-        stop(comparison_outcome[[1]])
-        
-    # b. send a polite message of snapshot is already up-to-date
-    } else if (names(comparison_outcome[1]) == "same") {
-        cat(paste("No snapshot was taken:", comparison_outcome[[1]], "\n\n"))
-        print(comparison_outcome[[2]])
-        
-    # c. make a snapshot and show outcome
+    # determine allowed outcomes
+    if (!replace_snapshot) {
+        # typically we only want to update if the snapshot is behind the library
+        allowed_outcome <- "snapshot_behind"
     } else {
-        installed_packages <- comparison_outcome[["compare_df"]] %>%
-            select(Package, Version)
+        # we can force a new snapshot if there are conflicts or the library is behind
+        allowed_outcome <- c("conflicts", "snapshot_behind", "library_behind")
+    }
+    
+    # check the comparison info on snapshot and package library
+    # (throwing error if different from allowed outcome)
+    comparison_outcome <- check_snapshot_restore(proj_libpath, allowed_outcome)
+    
+    # get snapshot
+    installed_packages <- comparison_outcome[["compare_df"]] %>%
+        filter(in_library) %>% # in case there are conflicts or the library is behind
+        select(Package, Version)
+    
+    # save a snapshot and view outcome
+    if (nrow(installed_packages) > 0) {
         write.csv(installed_packages, file = "snapshot-library.csv", row.names = FALSE)
         
-        # start message output
+        # view file locations
         cat(paste0("\nSnapshot taken from:\n", normalizePath(proj_libpath), "\n"))
         cat(paste0("\nSnapshot saved to:\n", normalizePath("snapshot-library.csv"), "\n"))
         
-        # import and view snapshot
+        # view snapshot
         cat("\nSnapshot Details:\n")
         utils::read.csv("snapshot-library.csv")
+    } else {
+        #  if there are no packages installed, just remove the existing snapshot
+        file.remove("snapshot-library.csv")
     }
 }
 
-#' Compare installed project packages to snapshot-library.csv
+#' Convenience function to compare installed project packages to snapshot-library.csv
 #' 
 #' The results of the comparison inform the recommendation for actions to 
 #' sync the installed library and it's snapshot.
@@ -173,6 +194,8 @@ view_library <- function(library_path = .libPaths()[1]) {
 #' 
 #' This installs only those snapshot packages not included in the library.
 #' @inheritParams snapshot_library
+#' @param override_version If TRUE, uses the version available in getOption("repos")
+#' regardless of the version specified in the snapshot.
 #' @family functions for maintaining project package libraries
 #' @import dplyr
 #' @export
@@ -242,7 +265,7 @@ restore_library <- function(proj_libpath = .libPaths()[1],
                 # this is a side-effect of the function (maybe not ideal)
                 z <- y %>% filter(in_repo) %>%
                     select(Package, Version_new = Version)
-                read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
+                utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
                     left_join(z, by = "Package") %>%
                     mutate(Version = ifelse(is.na(Version_new), Version, Version_new)) %>%
                     select(-Version_new) %>%

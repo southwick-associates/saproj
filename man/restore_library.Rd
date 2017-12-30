@@ -9,6 +9,9 @@ restore_library(proj_libpath = .libPaths()[1], override_version = FALSE)
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
 (note: changing this argument is not recommended)}
+
+\item{override_version}{If TRUE, uses the version available in getOption("repos")
+regardless of the version specified in the snapshot.}
 }
 \description{
 This installs only those snapshot packages not included in the library.

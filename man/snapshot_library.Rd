@@ -4,11 +4,15 @@
 \alias{snapshot_library}
 \title{Create a snapshot (csv) of packages installed in project library}
 \usage{
-snapshot_library(proj_libpath = .libPaths()[1])
+snapshot_library(proj_libpath = .libPaths()[1], replace_snapshot = FALSE)
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
 (note: changing this argument is not recommended)}
+
+\item{replace_snapshot}{logical: If TRUE, any existing snapshot will be removed
+and a snapshot will be created based on the current project library
+if any packages are installed.}
 }
 \description{
 The snapshot improves project portability by storing details about installed
