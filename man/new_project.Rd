@@ -4,24 +4,22 @@
 \alias{new_project}
 \title{Populate a project with default directories and files}
 \usage{
-new_project(dat = FALSE, dat2 = FALSE, dat_path = "D:/SA/Data",
-  dat_path2 = "D:/SA/Data2", projdir = NULL)
+new_project(proj_library, inherit_library = FALSE, projdir = NULL)
 }
 \arguments{
-\item{dat}{logical: If TRUE, make directory in dat_path}
+\item{proj_library}{character: Name of project library}
 
-\item{dat2}{logical: If TRUE, make directory in dat_path2}
-
-\item{dat_path}{character: file path to optional dat directory}
-
-\item{dat_path2}{character: file path to optional dat2 directory}
+\item{inherit_library}{logical: If TRUE, will use an existing project library}
 
 \item{projdir}{character: Subdirectory to place folders/files, intended for
-testing. If NULL, the working directory will be used}
+testing. If NULL, the working directory will be used.}
 }
 \description{
 Populate a project with default directories and files
 }
 \examples{
-saproj::new_project(projdir = "test-dir")
+saproj::new_project("some-project-name", projdir = "test-dir")
+}
+\seealso{
+Other functions for setting up projects: \code{\link{new_section}}
 }

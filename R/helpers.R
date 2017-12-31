@@ -1,6 +1,7 @@
 # helper functions for making files/folders
+# these functions aren't exported; they are only used within saproj functions
 
-#' Copy a file (helper function)
+#' Copy a file
 #'
 #' This is a helper function for copying files. It is a variation on
 #' \code{\link[base]{file.copy}} that includes an extra parameter, projdir
@@ -10,7 +11,7 @@
 #' testing. If NULL, the working directory will be used
 #' @param ... Other parameters passed to \code{\link[base]{file.copy}}
 #' @family helper functions for making directories and files
-#' @export
+#' @keywords internal
 #' @examples
 #' file.create("test")
 #' saproj::file_copy("test", "test2")
@@ -32,7 +33,7 @@ file_copy <- function(from, to, projdir = NULL, ...) {
 #' @param ... Other parameters passed to \code{\link[base]{dir.create}}
 #' @inheritParams file_copy
 #' @family helper functions for making directories and files
-#' @export
+#' @keywords internal
 #' @examples
 #' dir_create("test-dir")
 #' dir_create("test-dir", projdir = "proj-dir")
@@ -42,20 +43,4 @@ dir_create <- function(path, projdir = NULL, showWarnings = FALSE, ...) {
         path <- file.path(projdir, path)
     }
     dir.create(path, showWarnings = showWarnings, ...)
-}
-
-#' Make a data directory (helper function)
-#'
-#' A helper function for use in saproj new. Assumes the base project directory is
-#' one level above the R project directory
-#' @param dat_path character: file path for the directory where the data
-#' directory will be written to
-#' @family helper functions for making directories and files
-#' @export
-#' @examples
-#' saproj::make_dat("D:/test")
-make_dat <- function(dat_path) {
-    proj <- basename(dirname(getwd()))
-    dirmake <- file.path(dat_path, proj)
-    dir.create(dirmake)
 }
