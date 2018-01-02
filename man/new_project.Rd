@@ -4,21 +4,24 @@
 \alias{new_project}
 \title{Populate a project with default directories and files}
 \usage{
-new_project(proj_library, inherit_library = FALSE, projdir = NULL)
+new_project(project_library, inherit_library = FALSE,
+  r_version = paste(R.version$major, R.version$minor, sep = "."))
 }
 \arguments{
-\item{proj_library}{character: Name of project library}
+\item{project_library}{character: Name of project library to use for project-specific packages.
+This is required in order to encourage reproducibility and portability.}
 
-\item{inherit_library}{logical: If TRUE, will use an existing project library}
+\item{inherit_library}{logical: If TRUE, will use an existing project library. 
+The default is set to FALSE to avoid accidentally using an existing library.}
 
-\item{projdir}{character: Subdirectory to place folders/files, intended for
-testing. If NULL, the working directory will be used.}
+\item{r_version}{character: R version (e.g., "3.4.3") to use for the new project.
+Defaults to currently-used version.}
 }
 \description{
-Populate a project with default directories and files
+This also creates a space for project-specific packages (using .Rprofile)
 }
 \examples{
-saproj::new_project("some-project-name", projdir = "test-dir")
+saproj::new_project("some-project-name")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_section}}

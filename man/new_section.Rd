@@ -4,22 +4,21 @@
 \alias{new_section}
 \title{Create a new sub-directory for R code, data, and output}
 \usage{
-new_section(title, projdir = NULL, ...)
+new_section(section_title, recursive = TRUE)
 }
 \arguments{
-\item{title}{character: Name of sub-directory to create}
+\item{section_title}{character: Name of sub-directory to create}
 
-\item{projdir}{character: Subdirectory to place folders/files, intended for
-testing. If NULL, the working directory will be used.}
-
-\item{...}{Additional arguments passed to \code{\link[base]{dir.create}}}
+\item{recursive}{logical. Should elements of the path other than the
+    last be created?  If true, like the Unix command \command{mkdir -p}.}
 }
 \description{
-Create a new sub-directory for R code, data, and output
+This is a convenience function to start a new code 
+section by including corresponding section folders in "data/" and "out/".
 }
 \examples{
-saproj::new_project(projdir = "test-dir")
-saproj::new_section("1-first-section", projdir = "test-dir")
+saproj::new_project()
+saproj::new_section("1-first-section")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}}
