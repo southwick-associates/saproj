@@ -2,7 +2,7 @@
 % Please edit documentation in R/project-library.R
 \name{compare_library_snapshot}
 \alias{compare_library_snapshot}
-\title{Convenience function to compare installed project packages to snapshot-library.csv}
+\title{Compare project library to snapshot (helper function)}
 \usage{
 compare_library_snapshot(proj_libpath = .libPaths()[1])
 }
@@ -10,15 +10,29 @@ compare_library_snapshot(proj_libpath = .libPaths()[1])
 \item{proj_libpath}{character: The location of the project library 
 (note: changing this argument is not recommended)}
 }
+\value{
+The function returns a list with 1 or 2 elements:
+\enumerate{
+\item [outcome name]: A message about the comparison outcome
+\item 'compare_df': A data frame comparing snapshot & library packages (if applicable)
+}
+}
 \description{
-The results of the comparison inform the recommendation for actions in
-syncing the package library and it's snapshot.
+The result of the comparison informs the recommendation for actions in
+syncing the package library and it's snapshot. There are 5 possible outcomes
+to the comparison:
+\itemize{
+  \item 'neither' (no packages installed or recorded)
+  \item 'same' (snapshot up-to-date with library)
+  \item 'snapshot_behind' (snapshot behind library)
+  \item 'library_behind' (library behind snapshot)
+  \item 'conflicts' (library conflicts with snapshot)
+}
 }
 \examples{
 compare_library_snapshot()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{restore_library}},
-  \code{\link{snapshot_library}},
-  \code{\link{view_library}}
+Other helper functions for checking project libraries: \code{\link{compare_repo_snapshot}}
 }
+\keyword{internal}

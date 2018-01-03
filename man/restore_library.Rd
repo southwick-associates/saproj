@@ -2,7 +2,7 @@
 % Please edit documentation in R/project-library.R
 \name{restore_library}
 \alias{restore_library}
-\title{Restore a snapshot to a package library}
+\title{Restore a project library using a snapshot}
 \usage{
 restore_library(proj_libpath = .libPaths()[1], override_version = FALSE)
 }
@@ -14,13 +14,13 @@ restore_library(proj_libpath = .libPaths()[1], override_version = FALSE)
 regardless of the version specified in the snapshot.}
 }
 \description{
-This installs only those snapshot packages not included in the library.
+This is intended to be run when a project needs to be rerun or edited
+on a different computer. It installs the packages listed in 'project-snapshot.csv'.
 }
 \examples{
 restore_library()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{compare_library_snapshot}},
-  \code{\link{snapshot_library}},
+Other functions for maintaining project package libraries: \code{\link{snapshot_library}},
   \code{\link{view_library}}
 }

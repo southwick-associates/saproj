@@ -15,13 +15,13 @@ This is required in order to encourage reproducibility and portability.}
 The default is set to FALSE to avoid accidentally using an existing library.}
 
 \item{r_version}{character: R version (e.g., "3.4.3") to use for the new project.
-Defaults to currently-used version.}
+Defaults to currently loaded version.}
 }
 \description{
 This also creates a space for project-specific packages (using .Rprofile)
 }
 \examples{
-saproj::new_project("some-project-name")
+saproj::new_project("new-project-name")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_section}}

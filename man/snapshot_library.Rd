@@ -23,6 +23,6 @@ packages. The project library can be restored on a different machine using
 saproj::snapshot_library()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{compare_library_snapshot}},
-  \code{\link{restore_library}}, \code{\link{view_library}}
+Other functions for maintaining project package libraries: \code{\link{restore_library}},
+  \code{\link{view_library}}
 }

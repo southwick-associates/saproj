@@ -2,12 +2,14 @@
 % Please edit documentation in R/project-library.R
 \name{view_library}
 \alias{view_library}
-\title{Convenience function to look at a package library}
+\title{List packages installed in library}
 \usage{
 view_library(library_path = .libPaths()[1])
 }
 \arguments{
-\item{library_path}{character: path to package library}
+\item{library_path}{character: Path to package library. Defaults to the top-level
+library (typically a project-specific library if \code{\link{new_project}} was used
+to initialize a the project).}
 }
 \description{
 This is a quick way of looking at packages installed, particularly useful for a 
@@ -17,7 +19,6 @@ project-specific library.
 view_library()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{compare_library_snapshot}},
-  \code{\link{restore_library}},
+Other functions for maintaining project package libraries: \code{\link{restore_library}},
   \code{\link{snapshot_library}}
 }

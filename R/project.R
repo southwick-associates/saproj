@@ -12,11 +12,11 @@
 #' @param inherit_library logical: If TRUE, will use an existing project library. 
 #' The default is set to FALSE to avoid accidentally using an existing library.
 #' @param r_version character: R version (e.g., "3.4.3") to use for the new project.
-#' Defaults to currently-used version.
+#' Defaults to currently loaded version.
 #' @family functions for setting up projects
 #' @export
 #' @examples
-#' saproj::new_project("some-project-name")
+#' saproj::new_project("new-project-name")
 new_project <- function(project_library, inherit_library = FALSE,
                         r_version = paste(R.version$major, R.version$minor, sep = ".")) {
     
@@ -33,7 +33,7 @@ new_project <- function(project_library, inherit_library = FALSE,
         ))
     }
     
-    # 2. build directories & template files
+    # 2. make directories & template files
     dir.create("code")
     dir.create("data")
     dir.create("out")
@@ -53,10 +53,10 @@ new_project <- function(project_library, inherit_library = FALSE,
     source(".Rprofile")
 }
 
-#' Create a new sub-directory for R code, data, and output
+#' Create a new code section (i.e., sub-folder)
 #' 
 #' This is a convenience function to start a new code 
-#' section by including corresponding section folders in "data/" and "out/".
+#' section and also include corresponding sub-folders in "data/" and "out/".
 #' @param section_title character: Name of sub-directory to create
 #' @inheritParams base::dir.create
 #' @family functions for setting up projects

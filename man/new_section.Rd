@@ -2,7 +2,7 @@
 % Please edit documentation in R/project.R
 \name{new_section}
 \alias{new_section}
-\title{Create a new sub-directory for R code, data, and output}
+\title{Create a new code section (i.e., sub-folder)}
 \usage{
 new_section(section_title, recursive = TRUE)
 }
@@ -14,7 +14,7 @@ new_section(section_title, recursive = TRUE)
 }
 \description{
 This is a convenience function to start a new code 
-section by including corresponding section folders in "data/" and "out/".
+section and also include corresponding sub-folders in "data/" and "out/".
 }
 \examples{
 saproj::new_project()
