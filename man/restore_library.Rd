@@ -4,14 +4,18 @@
 \alias{restore_library}
 \title{Restore a project library using a snapshot}
 \usage{
-restore_library(proj_libpath = .libPaths()[1], override_version = FALSE)
+restore_library(proj_libpath = .libPaths()[1], override_version = FALSE,
+  repos = getOption("repos"))
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
 (note: changing this argument is not recommended)}
 
-\item{override_version}{logical: If TRUE, uses the version available in getOption("repos")
+\item{override_version}{logical: If TRUE, uses the version available in repos
 regardless of the version specified in the snapshot.}
+
+\item{repos}{character: The repository searched. The default will likely 
+come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).}
 }
 \description{
 This is intended to be run when a project needs to be rerun or edited

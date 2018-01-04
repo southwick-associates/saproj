@@ -216,6 +216,9 @@ view_library <- function(library_path = .libPaths()[1]) {
     cat("\n")
 }
 
+
+
+# TODO - change data frame output to be more descriptive (compare column)
 #' Compare snapshot to packages available in repository (helper function)
 #' 
 #' This is a helper function for use in \code{\link{restore_library}}. 
@@ -237,14 +240,23 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
     snapshot <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
         mutate(in_snapshot = TRUE)
     
-    # pull available package list from repo
-    # including only binary packages for simplicity
-    repo <- list(
-        # available.packages(type = "source", repos = repos) %>% 
-        #     data.frame(stringsAsFactors = FALSE),
-        available.packages(type = "binary") %>% data.frame(stringsAsFactors = FALSE)
-    )
-    repo <- bind_rows(repo) %>%
+    # pull available package list from repo (binary packages only)
+    # stops with error if the repo isn't available (determined with warning_flag)
+    f <- function() available.packages(repos = repos, type = "binary")
+    warning_flag <- "unable to access index for repository"
+    
+    repo_list <- tryCatch(f(), warning = function(c) {
+        if (stringr::str_detect(conditionMessage(c), warning_flag)) {
+            c$message <- paste0(
+                "The repo '", repos, "' doesn't appear to be currently available.\n",
+                "  You can set a different one with the 'repos' argument. For example:\n",
+                "  repos = 'https://cran.rstudio.com'", "\n\n"
+            )
+            stop(c)
+        }
+    })
+    
+    repo <- data.frame(repo_list) %>%
         filter(Package %in% snapshot$Package) %>%
         select(Package, Version) %>%
         mutate(in_repo = TRUE) %>%
@@ -258,19 +270,22 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
         arrange(Package, Version)
 }
 
+# TODO - Include a use_devtools argument
 #' Restore a project library using a snapshot
 #' 
 #' This is intended to be run when a project needs to be rerun or edited
 #' on a different computer. It installs the packages listed in 'project-snapshot.csv'.
 #' @inheritParams snapshot_library
-#' @param override_version logical: If TRUE, uses the version available in getOption("repos")
+#' @inheritParams compare_repo_snapshot
+#' @param override_version logical: If TRUE, uses the version available in repos
 #' regardless of the version specified in the snapshot.
 #' @family functions for maintaining project package libraries
 #' @import dplyr
 #' @export
 #' @examples
 #' restore_library()
-restore_library <- function(proj_libpath = .libPaths()[1], override_version = FALSE) {
+restore_library <- function(proj_libpath = .libPaths()[1], override_version = FALSE, 
+                            repos = getOption("repos")) {
     
     # check the comparison info on snapshot and package library
     # (throwing error if different from allowed outcome)
@@ -280,7 +295,7 @@ restore_library <- function(proj_libpath = .libPaths()[1], override_version = FA
     ### restore snapshot by installing to selected library
     
     # get details about packages to install
-    pkgs <- compare_repo_snapshot()
+    pkgs <- compare_repo_snapshot(repos)
     pkgs_needed <- comparison_outcome[["compare_df"]] %>% 
         filter(!in_library)
     pkgs_install <- pkgs %>% 
@@ -313,7 +328,7 @@ restore_library <- function(proj_libpath = .libPaths()[1], override_version = FA
             # don't install packages. instead end with warning
             stop(paste0(
                 "One or more packages from the snapshot aren't available in the repository:\n",
-                getOption("repos")[[1]], "\n\n",
+                as.character(repos)[1], "\n\n",
                 paste(capture.output(print(conflicts)), collapse = "\n"),
                 "\n\nRun 'restore_library(override_version = TRUE)'\n",
                 "to install the repo-available version(s) instead."
