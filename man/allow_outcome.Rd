@@ -19,7 +19,7 @@ Returns the result of compare_library_snapshot()
 This is a helper function for use in snapshot_library() and restore_library().
 It stops function execution for conditions where they shouldn't be run,
 which is based on the value returned by compare_library_snapshot().
-For example: one shouldn't (typically) run snapshot_library() unless we have "snapshot_behind".
+For example: one shouldn't (typically) run snapshot_library() unless "snapshot_behind".
 }
 \examples{
 compare_library_snapshot() \%>\% allow_outcome("snapshot_behind")

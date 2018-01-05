@@ -108,7 +108,7 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
 #' This is a helper function for use in snapshot_library() and restore_library().
 #' It stops function execution for conditions where they shouldn't be run,
 #' which is based on the value returned by compare_library_snapshot().
-#' For example: one shouldn't (typically) run snapshot_library() unless we have "snapshot_behind".
+#' For example: one shouldn't (typically) run snapshot_library() unless "snapshot_behind".
 #' @param comparison_outcome list: The output of \code{\link{compare_library_snapshot}}
 #' @param allowed_outcome character: The allowed outcome name(s) from 
 #' \code{\link{compare_library_snapshot}}
@@ -217,8 +217,6 @@ view_library <- function(library_path = .libPaths()[1]) {
 }
 
 
-
-# TODO - change data frame output to be more descriptive (compare column)
 #' Compare snapshot to packages available in repository (helper function)
 #' 
 #' This is a helper function for use in \code{\link{restore_library}}. 
@@ -228,6 +226,7 @@ view_library <- function(library_path = .libPaths()[1]) {
 #' come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).
 #' @family helper functions for checking project libraries
 #' @keywords internal
+#' @import dplyr
 #' @export
 #' @examples
 #' compare_repo_snapshot
@@ -270,77 +269,93 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
         arrange(Package)
 }
 
-# TODO - update to work with new compare_repo_snapshot output
-# TODO - Include a use_devtools argument
 #' Restore a project library using a snapshot
 #' 
-#' This is intended to be run when a project needs to be rerun or edited
+#' This is intended to be run when a project analysis needs to be re-run or edited
 #' on a different computer. It installs the packages listed in 'project-snapshot.csv'.
 #' @inheritParams snapshot_library
 #' @inheritParams compare_repo_snapshot
 #' @param override_version logical: If TRUE, uses the version available in repos
-#' regardless of the version specified in the snapshot.
+#' regardless of the version specified in the snapshot (and updates the snapshot 
+#' accordingly).
+#' @param use_devtools logical: If TRUE, uses \code{\link[devtools]{install_version}}.
+#' This requires the devtools package (obtained via 'install.packages("devtools")').
+#' It may also require configuration of your computer 
+#' (https://cran.r-project.org/doc/manuals/R-admin.html#The-Windows-toolset)
+#' @param devtools_repo character: Repository to use when use_devtools = TRUE
 #' @family functions for maintaining project package libraries
 #' @import dplyr
 #' @export
 #' @examples
 #' restore_library()
-restore_library <- function(proj_libpath = .libPaths()[1], override_version = FALSE, 
-                            repos = getOption("repos")) {
+restore_library <- function(
+    proj_libpath = .libPaths()[1], repos = getOption("repos"), override_version = FALSE,  
+    use_devtools = FALSE, devtools_repo = "https://cran.rstudio.com"
+) {
     
     # check the comparison info on snapshot and package library
     # (throwing error if different from allowed outcome)
     comparison_outcome <- compare_library_snapshot(proj_libpath) %>%
         allow_outcome("library_behind")
-        
-    ### restore snapshot by installing to selected library
     
-    # get details about packages to install
-    pkgs <- compare_repo_snapshot(repos)
+    # identify packages in snapshot that aren't installed
     pkgs_needed <- comparison_outcome[["compare_df"]] %>% 
         filter(!in_library)
-    pkgs_install <- pkgs %>% 
+        
+    # check the repository for packages to install
+    pkgs <- compare_repo_snapshot(repos) %>%
         semi_join(pkgs_needed, by = "Package")
     
-    # check for conflicts between repository and snapshot
-    if (any(!pkgs_install$in_repo)) {
-        # get details about conflicts
-        conflicts <- pkgs_install %>% 
-            filter(in_repo != in_snapshot)
-        
-        # for conflicts: don't install unless override_version == TRUE
-        if (override_version) {
-            # install anyway
-            pkgs_install_available <- pkgs_install %>%
-                filter(in_repo)
-            install.packages(unique(pkgs_install_available$Package))
-            compare_library_snapshot()[[2]] # check after install
-            
-            # modify the snapshot
-            pkgs_install_available <- pkgs_install_available %>% 
-                select(Package, Version_new = Version)
-            utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
-                left_join(pkgs_install_available, by = "Package") %>%
-                mutate(Version = ifelse(is.na(Version_new), Version, Version_new)) %>%
-                select(-Version_new) %>%
-                utils::write.csv(file = "snapshot-library.csv", row.names = FALSE)
-            
-        } else {
-            # don't install packages. instead end with warning
-            stop(paste0(
-                "One or more packages from the snapshot aren't available in the repository:\n",
-                as.character(repos)[1], "\n\n",
-                paste(capture.output(print(conflicts)), collapse = "\n"),
-                "\n\nRun 'restore_library(override_version = TRUE)'\n",
-                "to install the repo-available version(s) instead."
-            ))
+    # make error condition for conflicts between snapshot and repository
+    if ("version_conflict" %in% pkgs$compare & !override_version & !use_devtools) {
+        print_df <- filter(pkgs, compare == "version_conflict")
+        stop(paste0(
+            "There is a version conflict between the snapshot and the repo:\n  ",
+            repos, "\n\n",
+            paste(capture.output(print(print_df)), collapse = "\n"), "\n\n",
+            "A couple of options for resolving this:\n",
+            "a. Use the available repo version with 'override_version = TRUE'\n",
+            "b. Install the snapshot version from source using 'use_devtools = TRUE'"
+        ))
+    }
+    
+    # send a warning if any snapshot packages are missing from repository
+    # still allowing restore_library() to run since the user can install from another repo
+    if ("missing_from_repo" %in% pkgs$compare) {
+        print_df <- filter(pkgs, compare == "missing_from_repo")
+        warning(paste0(
+            "A package is missing from the repository and won't be installed:\n\n",
+            paste(capture.output(print(print_df)), collapse = "\n")
+        ))    
+    }
+    
+    # get final list of packages to install
+    pkgs_to_install <- pkgs %>%
+        filter(compare != "missing_from_repo")
+    if (nrow(pkgs_to_install) == 0) {
+        stop("No packages from snapshot to install.\n\n")
+    }
+    
+    # install selected packages    
+    if (use_devtools) {
+        for (i in seq_along(pkgs_to_install$Package)) {
+            devtools::install_version(
+                package = pkgs_to_install$Package[i], 
+                version = pkgs_to_install$Version_snapshot[i],  
+                repos = devtools_repo
+            )
         }
     } else {
-        # install as usual since there aren't conflicts
-        pkgs_install <- pkgs %>% 
-            semi_join(pkgs_needed, by = c("Package", "Version"))
-        install.packages(unique(pkgs_install$Package))
-        compare_library_snapshot()[[2]] # check after install
+        install.packages(unique(pkgs_to_install$Package), repos = repos)
+    }
+    
+    # modify snapshot if it was overrided by repo
+    if (override_version) {
+        utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
+            left_join(pkgs_to_install, by = "Package") %>%
+            mutate(Version = ifelse(is.na(Version_repo), Version, Version_repo)) %>%
+            select(Package, Version) %>%
+            utils::write.csv(file = "snapshot-library.csv", row.names = FALSE)
     }
 }
 

@@ -4,21 +4,30 @@
 \alias{restore_library}
 \title{Restore a project library using a snapshot}
 \usage{
-restore_library(proj_libpath = .libPaths()[1], override_version = FALSE,
-  repos = getOption("repos"))
+restore_library(proj_libpath = .libPaths()[1], repos = getOption("repos"),
+  override_version = FALSE, use_devtools = FALSE,
+  devtools_repo = "https://cran.rstudio.com")
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
 (note: changing this argument is not recommended)}
 
-\item{override_version}{logical: If TRUE, uses the version available in repos
-regardless of the version specified in the snapshot.}
-
 \item{repos}{character: The repository searched. The default will likely 
 come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).}
+
+\item{override_version}{logical: If TRUE, uses the version available in repos
+regardless of the version specified in the snapshot (and updates the snapshot 
+accordingly).}
+
+\item{use_devtools}{logical: If TRUE, uses \code{\link[devtools]{install_version}}.
+This requires the devtools package (obtained via 'install.packages("devtools")').
+It may also require configuration of your computer 
+(https://cran.r-project.org/doc/manuals/R-admin.html#The-Windows-toolset)}
+
+\item{devtools_repo}{character: Repository to use when use_devtools = TRUE}
 }
 \description{
-This is intended to be run when a project needs to be rerun or edited
+This is intended to be run when a project analysis needs to be re-run or edited
 on a different computer. It installs the packages listed in 'project-snapshot.csv'.
 }
 \examples{
