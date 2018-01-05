@@ -23,7 +23,7 @@
 #' \item 'compare_df': A data frame comparing snapshot & library packages (if applicable)
 #' }
 #' @examples
-#' compare_library_snapshot()
+#' saproj::compare_library_snapshot()
 compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     
     # define 5 possible comparison outcomes & corresponding messages to display
@@ -196,7 +196,7 @@ snapshot_library <- function(proj_libpath = .libPaths()[1], replace_snapshot = F
 #' @family functions for maintaining project package libraries
 #' @export
 #' @examples
-#' view_library()
+#' saproj::view_library()
 view_library <- function(library_path = .libPaths()[1]) {
     
     # print library path
@@ -221,7 +221,13 @@ view_library <- function(library_path = .libPaths()[1]) {
 #' 
 #' This is a helper function for use in \code{\link{restore_library}}. 
 #' It produces a table comparing snapshot package versions with versions
-#' available in the repository (see 'getOption("repos")' for the repository url)
+#' available in the repository. 
+#' There are 3 possible outcomes for each package comparison:
+#' \itemize{
+#'   \item 'same' (snapshot & repository agree)
+#'   \item 'missing_from_repo' (snapshot package not available in repository)
+#'   \item 'version_conflict' (snapshot & repository have different versions)
+#' }
 #' @param repos character: The repository searched. The default will likely 
 #' come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).
 #' @family helper functions for checking project libraries
@@ -229,7 +235,7 @@ view_library <- function(library_path = .libPaths()[1]) {
 #' @import dplyr
 #' @export
 #' @examples
-#' compare_repo_snapshot
+#' saproj::compare_repo_snapshot
 compare_repo_snapshot <- function(repos = getOption("repos")) {
     
     # get details about snapshot packages
@@ -287,7 +293,7 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
 #' @import dplyr
 #' @export
 #' @examples
-#' restore_library()
+#' saproj::restore_library()
 restore_library <- function(
     proj_libpath = .libPaths()[1], repos = getOption("repos"), override_version = FALSE,  
     use_devtools = FALSE, devtools_repo = "https://cran.rstudio.com"

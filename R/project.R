@@ -62,7 +62,7 @@ new_project <- function(project_library, inherit_library = FALSE,
 #' @family functions for setting up projects
 #' @export
 #' @examples
-#' saproj::new_project()
+#' saproj::new_project("new-project-name")
 #' saproj::new_section("1-first-section")
 new_section <- function(section_title, recursive = TRUE) {
     dir.create(file.path("code", section_title), ...)

@@ -31,7 +31,7 @@ This is intended to be run when a project analysis needs to be re-run or edited
 on a different computer. It installs the packages listed in 'project-snapshot.csv'.
 }
 \examples{
-restore_library()
+saproj::restore_library()
 }
 \seealso{
 Other functions for maintaining project package libraries: \code{\link{snapshot_library}},

@@ -13,10 +13,16 @@ come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).}
 \description{
 This is a helper function for use in \code{\link{restore_library}}. 
 It produces a table comparing snapshot package versions with versions
-available in the repository (see 'getOption("repos")' for the repository url)
+available in the repository. 
+There are 3 possible outcomes for each package comparison:
+\itemize{
+  \item 'same' (snapshot & repository agree)
+  \item 'missing_from_repo' (snapshot package not available in repository)
+  \item 'version_conflict' (snapshot & repository have different versions)
+}
 }
 \examples{
-compare_repo_snapshot
+saproj::compare_repo_snapshot
 }
 \seealso{
 Other helper functions for checking project libraries: \code{\link{compare_library_snapshot}}

@@ -16,7 +16,7 @@ This is a quick way of looking at packages installed, particularly useful for a
 project-specific library.
 }
 \examples{
-view_library()
+saproj::view_library()
 }
 \seealso{
 Other functions for maintaining project package libraries: \code{\link{restore_library}},

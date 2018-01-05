@@ -30,7 +30,7 @@ to the comparison:
 }
 }
 \examples{
-compare_library_snapshot()
+saproj::compare_library_snapshot()
 }
 \seealso{
 Other helper functions for checking project libraries: \code{\link{compare_repo_snapshot}}
