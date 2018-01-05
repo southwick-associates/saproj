@@ -112,6 +112,7 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
 #' @param comparison_outcome list: The output of \code{\link{compare_library_snapshot}}
 #' @param allowed_outcome character: The allowed outcome name(s) from 
 #' \code{\link{compare_library_snapshot}}
+#' @family internal helper functions
 #' @return Returns the result of compare_library_snapshot()
 #' @keywords internal
 #' @examples

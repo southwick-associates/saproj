@@ -4,40 +4,73 @@
 # dir.create("test")
 # setwd("test")
 
-#' Populate a project with default directories and files
+#' Get full library path (not exported - internal saproj only)
 #' 
-#' This also creates a space for project-specific packages (using .Rprofile)
-#' @param project_library character: Name of project library to use for project-specific packages.
-#' This is required in order to encourage reproducibility and portability.
-#' @param inherit_library logical: If TRUE, will use an existing project library. 
-#' The default is set to FALSE to avoid accidentally using an existing library.
-#' @param r_version character: R version (e.g., "3.4.3") to use for the new project.
-#' Defaults to currently loaded version.
-#' @family functions for setting up projects
-#' @export
+#' This is a helper function for use in new_project(), setup_project() and 
+#' update_project(). It gets the full library path and stops function 
+#' execution if the specified 
+#' project_library already exists (except with 'inherit_library = TRUE'). 
+#' This is intended to avoid a situation where the user accidently inherits 
+#' an existing library.
+#' @inheritParams new_project
+#' @family internal helper functions
+#' @return Returns the full path to project_library
+#' @keywords internal
 #' @examples
-#' saproj::new_project("new-project-name")
-new_project <- function(project_library, inherit_library = FALSE,
-                        r_version = paste(R.version$major, R.version$minor, sep = ".")) {
+#' get_library_path("example-existing-project")
+get_library_path <- function(project_library, inherit_library = FALSE) {
     
-    # 1. prepare the project package library
     proj_libpath <- file.path(Sys.getenv("R_HOME"), "project-library", project_library)
     
-    # stop if the project_library already exists
+    # error condition if the project_library already exists
     if (!inherit_library & dir.exists(proj_libpath)) {
         stop(paste0(
             "The '", project_library, "' library already exists.\n",
             "Please set 'inherit_library = TRUE' if you want to use this library.\n\n",
             "Existing project libraries:\n",
-            capture.output(list.dirs(dirname(proj_libpath), full.names = FALSE, recursive = FALSE))
-        ))
+            capture.output(
+                list.dirs(dirname(proj_libpath), full.names = FALSE, recursive = FALSE)
+            )
+        ), call. = FALSE)
+    }
+    proj_libpath
+}
+
+
+#' Set project parameters for an in-progress analysis
+#' 
+#' This sets up the reproducibility/portability by setting (1) R version
+#' and (2) project library. This information will be stored in '.Rprofile'.
+#' @param project_library character: Name of project library to use for project-specific packages.
+#' This is required in order to encourage reproducibility and portability.
+#' @param inherit_library logical: If TRUE, will use an existing project library. 
+#' The default is set to FALSE to avoid accidentally using an existing library.
+#' @param r_version character: R version (e.g., "3.4.3") to use for the project.
+#' Defaults to currently loaded version.
+#' @family functions for setting up projects
+#' @export
+#' @examples
+#' saproj::setup_project("new-project-name")
+setup_project <- function(
+    project_library, inherit_library = FALSE, 
+    r_version = paste(R.version$major, R.version$minor, sep = ".")
+) {
+    
+    # error condition: stop if an .Rprofile exists
+    # to avoid potential accidental mishaps by user
+    if (file.exists(".Rprofile")) {
+        stop("There is already an '.Rprofile' in this folder.\n",
+             "Make sure it isn't needed (and then remove it) before running this function.",
+             call. = FALSE)
     }
     
-    # 2. make directories & template files
-    dir.create("code")
-    dir.create("data")
-    dir.create("out")
-    file.copy(system.file("misc", "README", package = "saproj"), "README.txt")
+    # 1. prepare the project package library
+    proj_libpath <- get_library_path(project_library, inherit_library)
+    
+    # 2. make template files
+    if (!file.exists("README.txt")) {
+        file.copy(system.file("misc", ".Rprofile", package = "saproj"), "README.txt")
+    }
     file.copy(system.file("misc", ".Rprofile", package = "saproj"), ".Rprofile")
     
     # 3. Edit .Rprofile (to match r_version & proj_libpath)
@@ -46,12 +79,55 @@ new_project <- function(project_library, inherit_library = FALSE,
     x[10] <- paste0("proj_libname <- '", project_library, "'")
     writeLines(x, ".Rprofile")
     
-    # 4. print a message about new project created
-    cat("Files and folders have been initialized for the project.\n")
+    # 4. print a message about project setup
+    message(
+        "\nThis project has been initialized to use a package library:\n",
+        proj_libpath, "\n"
+    )
     
     # 5. source .Rprofile to initialize project library
     source(".Rprofile")
 }
+
+# TODO - Is this function really needed?
+# - could use an argument (template_folders = TRUE) as part of setup_project()
+
+#' Populate a project with default directories and files
+#' 
+#' This is a convenience function, intended for use with a new analysis. 
+#' It calls \code{\link{setup_project}} and creates a few template folders.
+#' @inheritParams setup_project
+#' @family functions for setting up projects
+#' @export
+#' @examples
+#' saproj::new_project("new-project-name")
+new_project <- function(
+    project_library, inherit_library = FALSE, 
+    r_version = paste(R.version$major, R.version$minor, sep = ".")
+) {
+    
+    # error condition: stop if this isn't an empty directory
+    # assuming only a "xxx.Rproj" exists
+    files <- list.files()
+    files <- files[!grepl("\\.Rproj$", files)] # to exclude any .Rproj files
+    if (length(files) > 0) {
+        stop("This isn't an empty folder.\n",
+             "Use setup_project() for an in-progress analysis.",
+             call. = FALSE)
+    }
+    
+    # 1. prepare the project package library
+    proj_libpath <- get_library_path(project_library, inherit_library)
+    
+    # make file templates (i.e., set project parameters)
+    setup_project(project_library, inherit_library, r_version)
+    
+    # 2. make folders
+    dir.create("code")
+    dir.create("data")
+    dir.create("out")
+}
+
 
 #' Create a new code section (i.e., sub-folder)
 #' 
@@ -70,21 +146,40 @@ new_section <- function(section_title, recursive = TRUE) {
     dir.create(file.path("out", section_title), ...)
 }
 
-# helper function to look at existing project libraries
-# probably not necessary since it is such a simple function
-view_project_libraries <- function(proj_libpath = .libPaths()[1]) {
-    list.dirs(dirname(proj_libpath), full.names = FALSE, recursive = FALSE)
-}
 
-# TODO - simple function for changing the 2 project parameters
-# NULL values inherit the existing project_library & r_version
-# might be worthwhile to make a view_project() that shows these
-update_project <- function(project_library = NULL, r_version = NULL) {
+# TODO - finish writing this function
+
+#' Update project R version or package library
+#' 
+#' This allows the 2 basic reproducibility parameters to be updated. This
+#' would be useful (for example) if you want to adapt code/data of an 
+#' existing project for a new project.
+#' @param project_library character: New project library to use. Defaults
+#' to no change.
+#' @param r_version character: New R version to use (e.g., "3.4.3"). Defaults
+#' to no change.
+#' @inheritParams setup_project
+#' @family functions for setting up projects
+#' @export
+#' @examples
+#' saproj::update_project(project_library = "new-project-name")
+#' saproj::update_project(r_version = "3.4.3")
+update_project <- function(project_library = NULL, r_version = NULL,
+                           inherit_library = FALSE) {
+    
+    # stop with error if no changes have been specified
+    if (is.null(project_library) & is.null(r_version)) {
+        stop("You haven't selected any project parameters to update.")
+    }
+    
+    # START HERE
+    if (!is.null(project_library)) {
+        # update project_library
+        proj_libpath <- get_library_path(project_library, inherit_library)
+    }
+    
     if (!is.null(r_version)) {
         # update the version
     }
-    
-    if (!is.null(project_library)) {
-        # update the library
-    }
 }
+

@@ -25,4 +25,7 @@ For example: one shouldn't (typically) run snapshot_library() unless "snapshot_b
 compare_library_snapshot() \%>\% allow_outcome("snapshot_behind")
 compare_library_snapshot() \%>\% allow_outcome("library_behind")
 }
+\seealso{
+Other internal helper functions: \code{\link{get_library_path}}
+}
 \keyword{internal}

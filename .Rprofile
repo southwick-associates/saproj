@@ -6,8 +6,8 @@
 local({
     
 # Project-specific Parameters
-r_version <- "3.4.3"
-proj_libname <- "southwick-packages"
+r_version <- '3.4.3'
+proj_libname <- 'southwick-packages'
 
 
 # Project-agnostic Setup Code ---------------------------------------------
