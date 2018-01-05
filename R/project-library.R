@@ -237,39 +237,40 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
     if (!file.exists("snapshot-library.csv")) {
         stop("There is no 'snapshot-library.csv' to compare", call. = FALSE)
     }
-    snapshot <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
-        mutate(in_snapshot = TRUE)
+    snapshot <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) 
     
-    # pull available package list from repo (binary packages only)
+    # pull available package list from repo (most recent binary packages only)
     # stops with error if the repo isn't available (determined with warning_flag)
-    f <- function() available.packages(repos = repos, type = "binary")
+    get_repo_list <- function() available.packages(repos = repos, type = "binary",  
+                                                   filters = "duplicates")
     warning_flag <- "unable to access index for repository"
     
-    repo_list <- tryCatch(f(), warning = function(c) {
+    repo_list <- tryCatch(get_repo_list(), warning = function(c) {
         if (stringr::str_detect(conditionMessage(c), warning_flag)) {
             c$message <- paste0(
                 "The repo '", repos, "' doesn't appear to be currently available.\n",
-                "  You can set a different one with the 'repos' argument. For example:\n",
-                "  repos = 'https://cran.rstudio.com'", "\n\n"
+                "  You can set a different one with the 'repos' argument. ", 
+                "For example:\n", "  repos = 'https://cran.rstudio.com'", "\n\n"
             )
             stop(c)
         }
-    })
-    
-    repo <- data.frame(repo_list) %>%
+    }) 
+    repo <- data.frame(repo_list, stringsAsFactors = FALSE) %>%
         filter(Package %in% snapshot$Package) %>%
-        select(Package, Version) %>%
-        mutate(in_repo = TRUE) %>%
-        distinct()
+        select(Package, Version_repo = Version)
     
-    full_join(snapshot, repo, by = c("Package", "Version")) %>%
-        mutate(
-            in_repo = ifelse(is.na(in_repo), FALSE, in_repo),
-            in_snapshot = ifelse(is.na(in_snapshot), FALSE, in_snapshot)
-        ) %>%
-        arrange(Package, Version)
+    # define outcomes: available, version_conflict, missing_from_repo
+    # these inform how to proceed when restore_library() is run
+    snapshot %>%
+        rename(Version_snapshot = Version) %>%
+        left_join(repo, by = "Package") %>%
+        mutate(compare = ifelse(is.na(Version_repo), "missing_from_repo",  
+                                ifelse(Version_snapshot != Version_repo,  
+                                       "version_conflict", "same"))) %>%
+        arrange(Package)
 }
 
+# TODO - update to work with new compare_repo_snapshot output
 # TODO - Include a use_devtools argument
 #' Restore a project library using a snapshot
 #' 
