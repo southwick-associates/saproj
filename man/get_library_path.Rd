@@ -7,7 +7,7 @@
 get_library_path(project_library, inherit_library = FALSE)
 }
 \arguments{
-\item{project_library}{character: Name of project library to use for project-specific packages.
+\item{project_library}{character: Name of project library to use for project packages.
 This is required in order to encourage reproducibility and portability.}
 
 \item{inherit_library}{logical: If TRUE, will use an existing project library. 
@@ -19,8 +19,7 @@ Returns the full path to project_library
 \description{
 This is a helper function for use in new_project(), setup_project() and 
 update_project(). It gets the full library path and stops function 
-execution if the specified 
-project_library already exists (except with 'inherit_library = TRUE'). 
+execution if the project_library exists (unless 'inherit_library = TRUE'). 
 This is intended to avoid a situation where the user accidently inherits 
 an existing library.
 }

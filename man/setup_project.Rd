@@ -8,7 +8,7 @@ setup_project(project_library, inherit_library = FALSE,
   r_version = paste(R.version$major, R.version$minor, sep = "."))
 }
 \arguments{
-\item{project_library}{character: Name of project library to use for project-specific packages.
+\item{project_library}{character: Name of project library to use for project packages.
 This is required in order to encourage reproducibility and portability.}
 
 \item{inherit_library}{logical: If TRUE, will use an existing project library. 

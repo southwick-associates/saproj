@@ -13,8 +13,8 @@ new_section(section_title, recursive = TRUE)
     last be created?  If true, like the Unix command \command{mkdir -p}.}
 }
 \description{
-This is a convenience function to start a new code 
-section and also include corresponding sub-folders in "data/" and "out/".
+This is a convenience function to start a new  folder in "code/" 
+and also include corresponding sub-folders in "data/" and "out/".
 }
 \examples{
 saproj::new_project("new-project-name")

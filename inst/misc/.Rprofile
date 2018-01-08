@@ -42,8 +42,8 @@ if (!(r_version == r_current_version)) {
     )
     message(paste0("\n", msg))
     
-    # Also use a popup warning on windows systems
-    if (Sys.info()[["sysname"]] == "Windows") utils::winDialog(type = "ok", message = msg)
+    # popup warning on windows systems
+    # if (Sys.info()[["sysname"]] == "Windows") utils::winDialog(type = "ok", message = msg)
 }
 
 

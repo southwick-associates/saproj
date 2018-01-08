@@ -8,7 +8,7 @@ new_project(project_library, inherit_library = FALSE,
   r_version = paste(R.version$major, R.version$minor, sep = "."))
 }
 \arguments{
-\item{project_library}{character: Name of project library to use for project-specific packages.
+\item{project_library}{character: Name of project library to use for project packages.
 This is required in order to encourage reproducibility and portability.}
 
 \item{inherit_library}{logical: If TRUE, will use an existing project library. 
@@ -19,7 +19,7 @@ Defaults to currently loaded version.}
 }
 \description{
 This is a convenience function, intended for use with a new analysis. 
-It calls \code{\link{setup_project}} and creates a few template folders.
+It calls \code{\link{setup_project}}, and also makes a few template folders.
 }
 \examples{
 saproj::new_project("new-project-name")
