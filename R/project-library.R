@@ -58,7 +58,8 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     # get current snapshot (if available)
     if (file.exists("snapshot-library.csv")) has_snapshot = TRUE else has_snapshot = FALSE
     if (has_snapshot) {
-        snapshot_df <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
+        snapshot_df <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE,
+                                       colClasses = "character") %>%
             mutate(in_snapshot = TRUE)
     }
     
