@@ -70,10 +70,9 @@ setup_project <- function(
     if (!file.exists("README.txt")) {
         file.copy(system.file("misc", "README.txt", package = "saproj"), "README.txt")
     }
-    file.copy(system.file("misc", ".Rprofile", package = "saproj"), ".Rprofile")
     
-    # 3. Edit .Rprofile (to match r_version & proj_libpath)
-    x <- readLines(".Rprofile")
+    # edit .Rprofile (to match r_version & proj_libpath)
+    x <- readLines(system.file("misc", ".Rprofile", package = "saproj"))
     x[9] <- paste0("r_version <- '", r_version, "'")
     x[10] <- paste0("proj_libname <- '", project_library, "'")
     writeLines(x, ".Rprofile")
