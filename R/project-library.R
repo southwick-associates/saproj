@@ -50,7 +50,8 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     )
     
     # get details about installed packages
-    library_df <- data.frame(utils::installed.packages(proj_libpath), stringsAsFactors = FALSE) %>%
+    library_df <- data.frame(utils::installed.packages(proj_libpath), 
+                             stringsAsFactors = FALSE) %>%
         select(Package, Version) %>%
         mutate(in_library = TRUE)
     if (nrow(library_df) > 0) has_library = TRUE else has_library = FALSE
@@ -244,7 +245,8 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
     if (!file.exists("snapshot-library.csv")) {
         stop("There is no 'snapshot-library.csv' to compare", call. = FALSE)
     }
-    snapshot <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) 
+    snapshot <- utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE,
+                                colClasses = "character") 
     
     # pull available package list from repo (most recent binary packages only)
     # stops with error if the repo isn't available (determined with warning_flag)
@@ -359,7 +361,8 @@ restore_library <- function(
     
     # modify snapshot if it was overrided by repo
     if (override_version) {
-        utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE) %>%
+        utils::read.csv("snapshot-library.csv", stringsAsFactors = FALSE,
+                        colClasses = "character") %>%
             left_join(pkgs_to_install, by = "Package") %>%
             mutate(Version = ifelse(is.na(Version_repo), Version, Version_repo)) %>%
             select(Package, Version) %>%
