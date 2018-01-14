@@ -9,41 +9,75 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The `saproj` package has two basic purposes:
+The `saproj` package provides functions & file templates to setup and maintain R-based Southwick analyses. It aims to enable:
 
-1. Present guidelines for organizing R-based analyses.
+- Reproducibility (across time & users)
+- Portability (across Windows OS computers)
+- Consistency (standard templates for file organization and Rmd code)
 
-2. Provide a way to automate the creation of project folders & files that follow these guidelines.
+Reproducibility and portability are facilitated by the use of Southwick-specific R installations, available on Office 365 (R Software > Documents > Installations). These provide a common set of (consistently versioned) R packages that each Southwick analyst can access. The package library can be extended on a project-by-project basis using functions in `saproj` that provide:
+
+**Project Initialization**: 
+
+- `new_project()` to begin a new project with it's own package library
+- `setup_project()` to set a project libary for an in-progress analysis
+- `update_project()` to adapt an existing project for a new project
+
+**Project Portability**: 
+
+- `snapshot_library()` to record packages installed in the project library
+- `restore_library()` to restore snapshotted packages to another computer
+
 
 ## R Prerequisites
 
-Familiarity with a few topics is needed for using `saproj` effectively:
-
-**Required**
+Familiarity with a few topics is recommended for effective R-based analysis:
 
 - [R Basics](https://www.rstudio.com/online-learning/#R). The [Base R Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf) provides a nice reference.
-- Familiarity with the [tidyverse](https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/) generally and [dplyr](https://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) in particular
 
-**Recommended**
+- Familiarity with the [tidyverse](https://www.tidyverse.org/) generally, and in particular [dplyr](http://dplyr.tidyverse.org/) (for data manipulation) and  [ggplot2](http://r4ds.had.co.nz/data-visualisation.html) (for visualization)
 
-- [RMarkdown](http://rmarkdown.rstudio.com/lesson-1.html) for a notebook interface and convenient analysis documentation
-- [R for Data Science](http://r4ds.had.co.nz/) for further reading
+- [RMarkdown](http://rmarkdown.rstudio.com/lesson-1.html) which provides a notebook-based  approach that emphasizes documentation
 
-## Starting a Project
+**Additional Reading**: [R for Data Science](http://r4ds.had.co.nz/) provides a useful in-depth treatment on many R analysis topics.
 
+
+## Project Initialization
+
+### Starting a New Project
+
+The `saproj` package makes it easy to start a project
 To begin analysis on a Project:
 
 1. Create a new project in RStudio by clicking *File > New Project* (see [RStudio Projects](http://r4ds.had.co.nz/workflow-projects.html) for an introduction).
 
-2. Run `saproj::new_project` from the console. This creates default files & folders, along with a README (which you should update as the analysis progresses).
+2. Run `saproj::new_project("project-name")` from the console. This creates some standard folders and a couple of files that inform project reproducibility:
+    + `.Rprofile`: A file that R uses on startup to define the project-specific package library
+    + `README.txt`: A place to store project-specific info that another analyst can quickly access
 
-![](new-project-files.png)
+Once a project is initialized, any calls to `install.packages()` will place packages in the appropriate project library. This is useful because it provides a means to use addtional packages not included in the Southwick R installation. Using project-specific libraries in this way also makes the dependencies clear, so projects can be easily re-run on another computer.
+
+#### Folder Structure
+
+Running `new_project()` populates the project with three default folders:
+
+![](project-folders.png) '
+
 
 Using this simple directory structure is useful because it:
 
 - Scales well; accomodating both simple and complex analyses.
 - Provides a familiar format, which facilitates collaboration.
 - Encapsulates all the necessary parts of an analysis workflow (scripts, data, outputs).
+
+### START HERE - Setting an In-progress Project
+
+### Adapting an existing Project
+
+
+## Project Portability
+
+## OLD STUFF BELOW - maybe drop
 
 ## Simple Example Project
 
