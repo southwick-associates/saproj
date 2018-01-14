@@ -8,7 +8,7 @@ snapshot_library(proj_libpath = .libPaths()[1], replace_snapshot = FALSE)
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
-(note: changing this argument is not recommended)}
+(note: changing this value is not recommended)}
 
 \item{replace_snapshot}{logical: If TRUE, any existing snapshot will be removed
 and a snapshot will be created based on the current project library

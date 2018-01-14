@@ -10,7 +10,7 @@ restore_library(proj_libpath = .libPaths()[1], repos = getOption("repos"),
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
-(note: changing this argument is not recommended)}
+(note: changing this value is not recommended)}
 
 \item{repos}{character: The repository searched. The default will likely 
 come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).}
@@ -19,10 +19,9 @@ come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).}
 regardless of the version specified in the snapshot (and updates the snapshot 
 accordingly).}
 
-\item{use_devtools}{logical: If TRUE, uses devtools \code{\link[devtools]{install_version}}
-(devtools will be installed if it isn't available).
-This may require additional configuration of your computer (installing RTools probably)
-and RStudio might open a window which will install it for you if you select 'OK'.}
+\item{use_devtools}{logical: If TRUE, uses \code{\link[devtools]{install_version}}.
+This may require additional configuration of your computer (installing RTools).
+RStudio might open a prompt to begin RTools installation if you select 'OK'.}
 
 \item{devtools_repo}{character: Repository to use when use_devtools = TRUE}
 }

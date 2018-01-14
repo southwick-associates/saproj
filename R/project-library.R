@@ -139,7 +139,7 @@ allow_outcome <- function(comparison_outcome, allowed_outcome) {
 #' packages. The project library can be restored on a different machine using 
 #' \code{\link{restore_library}}
 #' @param proj_libpath character: The location of the project library 
-#' (note: changing this argument is not recommended)
+#' (note: changing this value is not recommended)
 #' @param replace_snapshot logical: If TRUE, any existing snapshot will be removed
 #' and a snapshot will be created based on the current project library
 #' (if any packages are installed).
@@ -288,10 +288,9 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
 #' @param override_version logical: If TRUE, uses the version available in repos
 #' regardless of the version specified in the snapshot (and updates the snapshot 
 #' accordingly).
-#' @param use_devtools logical: If TRUE, uses devtools \code{\link[devtools]{install_version}}
-#' (devtools will be installed if it isn't available).
-#' This may require additional configuration of your computer (installing RTools probably)
-#' and RStudio might open a window which will install it for you if you select 'OK'.
+#' @param use_devtools logical: If TRUE, uses \code{\link[devtools]{install_version}}.
+#' This may require additional configuration of your computer (installing RTools).
+#' RStudio might open a prompt to begin RTools installation if you select 'OK'.
 #' @param devtools_repo character: Repository to use when use_devtools = TRUE
 #' @family functions for maintaining project package libraries
 #' @import dplyr

@@ -8,7 +8,7 @@ compare_library_snapshot(proj_libpath = .libPaths()[1])
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
-(note: changing this argument is not recommended)}
+(note: changing this value is not recommended)}
 }
 \value{
 The function returns a list with 1 or 2 elements:
