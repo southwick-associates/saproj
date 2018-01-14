@@ -19,10 +19,10 @@ come from MRAN (see 'https://mran.microsoft.com/timemachine' for details).}
 regardless of the version specified in the snapshot (and updates the snapshot 
 accordingly).}
 
-\item{use_devtools}{logical: If TRUE, uses \code{\link[devtools]{install_version}}.
-This requires the devtools package (obtained via 'install.packages("devtools")').
-It may also require configuration of your computer 
-(https://cran.r-project.org/doc/manuals/R-admin.html#The-Windows-toolset)}
+\item{use_devtools}{logical: If TRUE, uses devtools \code{\link[devtools]{install_version}}
+(devtools will be installed if it isn't available).
+This may require additional configuration of your computer (installing RTools probably)
+and RStudio might open a window which will install it for you if you select 'OK'.}
 
 \item{devtools_repo}{character: Repository to use when use_devtools = TRUE}
 }
