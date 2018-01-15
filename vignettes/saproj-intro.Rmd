@@ -15,13 +15,13 @@ The `saproj` package provides functions & file templates to setup and maintain R
 - Portability (across Windows OS computers)
 - Consistency (standard templates for file organization and Rmd code)
 
-Reproducibility and portability are facilitated by the use of Southwick-specific R installations, available on Office 365 (R Software > Documents > Installations). These provide a common set of (consistently versioned) R packages that each Southwick analyst can access. The package library can be extended on a project-by-project basis using functions in `saproj` that provide:
+The `saproj` approach relies on Southwick-specific R installations, available on Office 365 (R Software > Documents > Installations). These provide a common set of (consistently versioned) R packages that each Southwick analyst can access. The package library can be extended on a project-by-project basis using functions in `saproj` that provide:
 
 **Project Initialization**: 
 
 - `new_project()` to begin a new project with it's own package library
 - `setup_project()` to set a project libary for an in-progress analysis
-- `update_project()` to adapt an existing project for a new project
+- `update_project()` to adapt existing project code for a new project
 
 **Project Portability**: 
 
@@ -39,47 +39,55 @@ Familiarity with a few topics is recommended for effective R-based analysis:
 
 - [RMarkdown](http://rmarkdown.rstudio.com/lesson-1.html) which provides a notebook-based  approach that emphasizes documentation
 
-**Additional Reading**: [R for Data Science](http://r4ds.had.co.nz/) provides a useful in-depth treatment on many R analysis topics.
+**Additional Reading**: [R for Data Science](http://r4ds.had.co.nz/) provides in-depth treatment on many R analysis topics.
 
 
 ## Project Initialization
 
+Once a project is initialized with `saproj`, any calls to `install.packages()` will place packages in the appropriate project library. This is useful because it provides a means to use addtional packages not included in the Southwick R installation. Using project-specific libraries in this way also makes the dependencies clear, so projects can be easily re-run on another computer.
+
 ### Starting a New Project
 
-The `saproj` package makes it easy to start a project
-To begin analysis on a Project:
+The `saproj` package makes it easy to start a project:
 
 1. Create a new project in RStudio by clicking *File > New Project* (see [RStudio Projects](http://r4ds.had.co.nz/workflow-projects.html) for an introduction).
 
-2. Run `saproj::new_project("project-name")` from the console. This creates some standard folders and a couple of files that inform project reproducibility:
-    + `.Rprofile`: A file that R uses on startup to define the project-specific package library
-    + `README.txt`: A place to store project-specific info that another analyst can quickly access
+2. Open the *[new-project].Rproj* and run `new_project("project-name")` from the console. You can run `view_projects()` to see which project names have already been taken.
 
-Once a project is initialized, any calls to `install.packages()` will place packages in the appropriate project library. This is useful because it provides a means to use addtional packages not included in the Southwick R installation. Using project-specific libraries in this way also makes the dependencies clear, so projects can be easily re-run on another computer.
-
-#### Folder Structure
-
-Running `new_project()` populates the project with three default folders:
-
-![](project-folders.png) '
-
-
-Using this simple directory structure is useful because it:
+Running `new_project()` populates the project with 3 folders and 2 files. This approach:
 
 - Scales well; accomodating both simple and complex analyses.
 - Provides a familiar format, which facilitates collaboration.
 - Encapsulates all the necessary parts of an analysis workflow (scripts, data, outputs).
 
-### START HERE - Setting an In-progress Project
+![](template-structure.png) '
+
+#### Rmd Templates
+
+You can use R Markdown templates from `saproj` when creating a new script:
+
+![](rmarkdown-template.png) '
+
+
+### Setting an In-progress Project
+
+Run `setup_project("project-name")` to create a project library for an existing project (which `saproj` accomplishes by making an *.Rprofile* file).
 
 ### Adapting an existing Project
+
+For repeated projects (or those similar to another project) it can be useful to copy an older project's code and adapt it for a new project. This is facilitated in `saproj` by:
+
+1. Copy the old project analysis folder to a new location (removing old project-specific files that won't be needed such as html documentation and results output).
+
+2. Run `update_project("new-project-name")` to initialize a new project library. Then `restore_library()` can be run to bring any for the original project's packages into the new library.
 
 
 ## Project Portability
 
-## OLD STUFF BELOW - maybe drop
+Running `snapshot_library()` creates a *snapshot-library.csv* that serves as a record of packages installed into the project library. The package library can be restored on another machine using `restore_library()`.
 
-## Simple Example Project
+
+## Example Project Structure
 
 Entire analysis in 3 scripts:
 
@@ -87,18 +95,13 @@ Entire analysis in 3 scripts:
     + 1-load.Rmd
     + 2-clean.Rmd
     + 3-do.Rmd
-    
-You can use R Markdown templates from `saproj` when creating a new R Markdown document:
 
-![](rmarkdown-from-template.png)
 
-## More Complex Example Project
-
-Organizing scripts in sub-folders:
+Organizing scripts in sub-folders (i.e., sections):
 
 - code
-    + 1-prep
-    + 2-profiles
-    + 3-results
+    + 1-prep/ (1-load.Rmd, 2-clean.Rmd, 3-do.Rmd)
+    + 2-profiles/
+    + 3-results/
 
-Making sections can be automated using `saproj::new_section`
+*Making sections can be automated with `new_section()`*

@@ -4,6 +4,7 @@
 # dir.create("test")
 # setwd("test")
 
+
 #' Get full library path (not exported - internal saproj only)
 #' 
 #' This is a helper function for use in new_project(), setup_project() and 
@@ -208,3 +209,59 @@ update_project <- function(project_library = NULL, r_version = NULL,
     source(".Rprofile")
 }
 
+
+#' List project libraries stored on this computer
+#' 
+#' This is intended to help out if you are wondering what to name a new project
+#' (i.e., the 'project_library' parameter in \code{\link{new_project}}, etc.).
+#' @param list_packages logical: If TRUE, includes a list of packages installed
+#' in each project library.
+#' @param all_versions logical: If TRUE, include all versions of R installed on 
+#' this machine. Defaults to using only the currently loaded version.
+#' @family functions for setting up projects
+#' @import dplyr
+#' @export
+#' @examples
+#' view_projects()
+#' view_projects(list_packages = TRUE)
+#' view_projects(list_packages = TRUE, all_versions = TRUE)
+view_projects <- function(
+    list_packages = FALSE,
+    all_versions = FALSE
+) {
+    # get a list of available R versions
+    R_path <- Sys.getenv("R_HOME") %>% dirname()
+    if (all_versions) {
+        versions <- list.dirs(R_path, recursive = FALSE) %>% basename()
+    } else {
+        versions <- basename(Sys.getenv("R_HOME"))
+    }
+    
+    # make a data frame with 2 variables, R.Version, Project.Library
+    # the loop allows stacking over all versions
+    libs <- list()          # project library names
+    lib_df <- list()        # data frame with Version & Library
+    for (i in versions) {
+        libs[[i]] <- file.path(R_path, i, "project-library") %>%
+            list.dirs(full.names = TRUE, recursive = FALSE)
+        lib_df[[i]] <- data.frame(
+            R.Version = i, Project.Library = basename(libs[[i]]),
+            stringsAsFactors = FALSE)
+    }
+    lib_df <- bind_rows(lib_df)
+    
+    # get info about installed packages (if applicable)
+    if (list_packages) {
+        libs <- unlist(libs)
+        pkgs <- c()
+        for (i in seq_along(libs)) {
+            pkg <- list.dirs(libs[i], recursive = FALSE, full.names = FALSE)
+            pkgs[i] <- paste0("(", paste(pkg, collapse = ", "), ")")
+        }
+        lib_df$Installed.Packages <- pkgs
+    }
+    
+    # print a message with project library details
+    message("\nProject library Info:\n",  "---------------------")
+    print(lib_df, right = FALSE, row.names = FALSE)
+}

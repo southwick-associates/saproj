@@ -28,5 +28,6 @@ saproj::update_project(r_version = "3.4.3")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}},
-  \code{\link{new_section}}, \code{\link{setup_project}}
+  \code{\link{new_section}}, \code{\link{setup_project}},
+  \code{\link{view_projects}}
 }

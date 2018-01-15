@@ -26,5 +26,6 @@ saproj::setup_project("new-project-name")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}},
-  \code{\link{new_section}}, \code{\link{update_project}}
+  \code{\link{new_section}}, \code{\link{update_project}},
+  \code{\link{view_projects}}
 }

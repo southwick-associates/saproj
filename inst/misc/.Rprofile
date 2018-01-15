@@ -41,9 +41,6 @@ if (!(r_version == r_current_version)) {
         "the 'R Software' Office 365 group:\n", paste0(" Installations/", r_version, ".zip")
     )
     message(paste0("\n", msg))
-    
-    # popup warning on windows systems
-    # if (Sys.info()[["sysname"]] == "Windows") utils::winDialog(type = "ok", message = msg)
 }
 
 

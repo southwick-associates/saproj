@@ -1,3 +1,43 @@
 
+A good reference for making R packages: http://r-pkgs.had.co.nz/
+
+Functions are separated into 3 files:
+- project.R (for setting up projects)
+- project-library.R (for maintaining project package libraries)
+- misc.R
+
+Additional Material:
+- vignettes/saproj-intro
+- inst/rmarkdown (Rmd template)
+- inst/misc (template .Rprofile & README)
+
 Installed project packages:
-install.packages(c("devtools", "roxygen2", "testthat"))
+- install.packages(c("devtools", "roxygen2", "testthat"))
+
+
+--- OVERVIEW ---
+The basic intent of saproj is to provide a simple set of functions for 
+maintaining package libraries. I made this functionality because I wasn't 
+satisfied with current offerings (packrat, checkpoint). saproj relies
+on the Southwick R Setup to provide a consistent set of default packages, and 
+adds a way of installing/documenting project package installations, so the 
+user can have a customized (project-specific) set of additional libraries, and
+this can easily be reestablished on another machine.
+
+I picked "R.home/project-library" as a place to store project-specific packages because:
+- It likely won't be accidently tampered with
+- It is machine specific (restablishing on another machine requires installing R and packages)
+- It is outside of the project directory:
+  - so installed software won't get backed up or transferred to other machines
+  - multiple projects can share a project library, useful for big/related projects
+
+I took some time to include lots of messages and error handling. I thought this 
+was worthwhile since I assume that most users won't follow the 
+snapshot/restore protocol without hand-holding. And I didn't want to add annoying
+overhead to an analyst's workflow.
+
+The basic analyst workflow is:
+1. initialize a project with new_project()
+2. record library changes with snapshot_library(), which the user will be 
+   prompted to do at R project startup
+3. reestablish on a new maching with restore_library()
