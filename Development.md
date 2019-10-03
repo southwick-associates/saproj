@@ -5,7 +5,7 @@ A good reference for making R packages: http://r-pkgs.had.co.nz/
 
 - project.R (for setting up projects)
 - project-library.R (for maintaining project package libraries)
-- misc.R
+- saproj.R
 
 ## Additional Material
 
