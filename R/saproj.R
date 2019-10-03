@@ -1,4 +1,4 @@
-# miscellaneous functions
+# package-level functions & documentation
 
 # message to be displayed when package loads
 .onAttach <- function(libname, pkgname) {

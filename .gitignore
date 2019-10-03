@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+.Rprofile
+snapshot-library.csv
 saproj.Rproj
 inst/doc
 test

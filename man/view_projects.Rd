@@ -27,3 +27,4 @@ Other functions for setting up projects: \code{\link{new_project}},
   \code{\link{new_section}}, \code{\link{setup_project}},
   \code{\link{update_project}}
 }
+\concept{functions for setting up projects}

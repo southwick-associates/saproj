@@ -22,3 +22,4 @@ saproj::view_library()
 Other functions for maintaining project package libraries: \code{\link{restore_library}},
   \code{\link{snapshot_library}}
 }
+\concept{functions for maintaining project package libraries}

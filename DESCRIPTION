@@ -7,15 +7,17 @@ Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
 Description: Provides functions & file templates to setup and maintain R-based Southwick 
     projects. The aim is to provide a low-overhead workflow that enables
     reproducibility (across time & users) and portability (across Windows OS computers).
+License: Intended for Southwick internal use
+Encoding: UTF-8
 Depends:
     R (>= 3.3.1)
 Imports:
     rmarkdown (>= 1.0),
     stringr (>= 1.0.0),
     dplyr (>= 0.5.0)
-License: Southwick Associates Only
 LazyData: TRUE
-RoxygenNote: 6.0.1
-Suggests: knitr,
+RoxygenNote: 6.1.0
+Suggests: 
+    knitr,
     rmarkdown
 VignetteBuilder: knitr

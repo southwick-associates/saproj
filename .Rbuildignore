@@ -2,3 +2,7 @@
 ^\.Rproj\.user$
 ^snapshot-library\.csv$ # a file that might be produced during testing
 ^test$
+^Development\.md$
+^TODO\.md$
+^README\.md$
+^snapshot-library\.csv$

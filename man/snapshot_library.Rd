@@ -4,7 +4,8 @@
 \alias{snapshot_library}
 \title{Create a snapshot (csv) of packages installed in project library}
 \usage{
-snapshot_library(proj_libpath = .libPaths()[1], replace_snapshot = FALSE)
+snapshot_library(proj_libpath = .libPaths()[1],
+  replace_snapshot = FALSE)
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
@@ -26,3 +27,4 @@ saproj::snapshot_library()
 Other functions for maintaining project package libraries: \code{\link{restore_library}},
   \code{\link{view_library}}
 }
+\concept{functions for maintaining project package libraries}
