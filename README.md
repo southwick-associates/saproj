@@ -1,7 +1,7 @@
 
 # saproj
 
-The basic intent of saproj is to provide a simple set of functions for  maintaining package libraries. I made this functionality because I wasn't satisfied with current offerings (packrat, checkpoint). It's intended for Southwick internal use only.
+The basic intent of package saproj is to provide a simple set of functions for  maintaining package libraries. I made this functionality because I wasn't satisfied with current offerings (packrat, checkpoint). It's intended for Southwick internal use only.
 
 ## Installation
 
