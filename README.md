@@ -1,7 +1,7 @@
 
 # saproj: An R package for Southwick internal use
 
-The basic intent of saproj is to provide a simple set of functions for  maintaining package libraries. I made this functionality because I wasn't satisfied with current offerings (packrat, checkpoint). saproj relies on the Southwick R Setup to provide a consistent set of default packages, and  adds a way of installing/documenting project package installations, so the user can have a customized (project-specific) set of additional libraries, and this can easily be reestablished on another machine. 
+The basic intent of saproj is to provide a simple set of functions for  maintaining package libraries. I made this functionality because I wasn't satisfied with current offerings (packrat, checkpoint). 
 
 ## Installation
 
