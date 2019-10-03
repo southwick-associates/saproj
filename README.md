@@ -9,8 +9,10 @@ Install saproj using the devtools package:
 
 ``` r
 # install dependencies
+install.packages(c("dplyr", "stringr"))
 
 # install saproj
+devtools::install_github("southwick-associates/saproj")
 ```
 
 ## Usage

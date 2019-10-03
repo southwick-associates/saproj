@@ -16,8 +16,9 @@
 #' @family internal helper functions
 #' @return Returns the full path to project_library
 #' @keywords internal
+#' @export
 #' @examples
-#' get_library_path("example-existing-project")
+#' # get_library_path("example-existing-project")
 get_library_path <- function(project_library, inherit_library = FALSE) {
     
     proj_libpath <- file.path(Sys.getenv("R_HOME"), "project-library", project_library)
@@ -50,7 +51,7 @@ get_library_path <- function(project_library, inherit_library = FALSE) {
 #' @family functions for setting up projects
 #' @export
 #' @examples
-#' saproj::setup_project("new-project-name")
+#' # saproj::setup_project("new-project-name")
 setup_project <- function(
     project_library, inherit_library = FALSE, 
     r_version = paste(R.version$major, R.version$minor, sep = ".")
@@ -96,7 +97,7 @@ setup_project <- function(
 #' @family functions for setting up projects
 #' @export
 #' @examples
-#' saproj::new_project("new-project-name")
+#' # saproj::new_project("new-project-name")
 new_project <- function(
     project_library, inherit_library = FALSE, 
     r_version = paste(R.version$major, R.version$minor, sep = ".")
@@ -131,8 +132,8 @@ new_project <- function(
 #' @family functions for setting up projects
 #' @export
 #' @examples
-#' saproj::new_project("new-project-name")
-#' saproj::new_section("1-first-section")
+#' # saproj::new_project("new-project-name")
+#' # saproj::new_section("1-first-section")
 new_section <- function(section_title, recursive = TRUE) {
     dir.create(file.path("code", section_title), recursive = recursive)
     dir.create(file.path("data", section_title), recursive = recursive)
@@ -153,8 +154,8 @@ new_section <- function(section_title, recursive = TRUE) {
 #' @family functions for setting up projects
 #' @export
 #' @examples
-#' saproj::update_project(project_library = "new-project-name")
-#' saproj::update_project(r_version = "3.4.3")
+#' # saproj::update_project(project_library = "new-project-name")
+#' # saproj::update_project(r_version = "3.4.3")
 update_project <- function(project_library = NULL, r_version = NULL,
                            inherit_library = FALSE) {
     
@@ -222,9 +223,9 @@ update_project <- function(project_library = NULL, r_version = NULL,
 #' @import dplyr
 #' @export
 #' @examples
-#' view_projects()
-#' view_projects(list_packages = TRUE)
-#' view_projects(list_packages = TRUE, all_versions = TRUE)
+#' # view_projects()
+#' # view_projects(list_packages = TRUE)
+#' # view_projects(list_packages = TRUE, all_versions = TRUE)
 view_projects <- function(
     list_packages = FALSE,
     all_versions = FALSE

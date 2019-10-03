@@ -22,7 +22,7 @@ This sets up the reproducibility/portability by setting (1) R version
 and (2) project library. This information will be stored in '.Rprofile'.
 }
 \examples{
-saproj::setup_project("new-project-name")
+# saproj::setup_project("new-project-name")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}},

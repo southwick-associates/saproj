@@ -18,9 +18,9 @@ This is intended to help out if you are wondering what to name a new project
 (i.e., the 'project_library' parameter in \code{\link{new_project}}, etc.).
 }
 \examples{
-view_projects()
-view_projects(list_packages = TRUE)
-view_projects(list_packages = TRUE, all_versions = TRUE)
+# view_projects()
+# view_projects(list_packages = TRUE)
+# view_projects(list_packages = TRUE, all_versions = TRUE)
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}},

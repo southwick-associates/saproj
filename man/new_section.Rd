@@ -17,8 +17,8 @@ This is a convenience function to start a new  folder in "code/"
 and also include corresponding sub-folders in "data/" and "out/".
 }
 \examples{
-saproj::new_project("new-project-name")
-saproj::new_section("1-first-section")
+# saproj::new_project("new-project-name")
+# saproj::new_section("1-first-section")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}},

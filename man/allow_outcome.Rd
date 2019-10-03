@@ -22,8 +22,9 @@ which is based on the value returned by compare_library_snapshot().
 For example: one shouldn't (typically) run snapshot_library() unless "snapshot_behind".
 }
 \examples{
-compare_library_snapshot() \%>\% allow_outcome("snapshot_behind")
-compare_library_snapshot() \%>\% allow_outcome("library_behind")
+library(dplyr)
+# compare_library_snapshot() \%>\% allow_outcome("snapshot_behind")
+# compare_library_snapshot() \%>\% allow_outcome("library_behind")
 }
 \seealso{
 Other internal helper functions: \code{\link{get_library_path}}

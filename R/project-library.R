@@ -23,7 +23,7 @@
 #' \item 'compare_df': A data frame comparing snapshot & library packages (if applicable)
 #' }
 #' @examples
-#' saproj::compare_library_snapshot()
+#' # saproj::compare_library_snapshot()
 compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
     
     # define 5 possible comparison outcomes & corresponding messages to display
@@ -117,9 +117,11 @@ compare_library_snapshot <- function(proj_libpath = .libPaths()[1]) {
 #' @family internal helper functions
 #' @return Returns the result of compare_library_snapshot()
 #' @keywords internal
+#' @export
 #' @examples
-#' compare_library_snapshot() %>% allow_outcome("snapshot_behind")
-#' compare_library_snapshot() %>% allow_outcome("library_behind")
+#' library(dplyr)
+#' # compare_library_snapshot() %>% allow_outcome("snapshot_behind")
+#' # compare_library_snapshot() %>% allow_outcome("library_behind")
 allow_outcome <- function(comparison_outcome, allowed_outcome) {
     
     # stop with error messsage if different from the allowed outcome
@@ -147,7 +149,7 @@ allow_outcome <- function(comparison_outcome, allowed_outcome) {
 #' @import dplyr
 #' @export
 #' @examples
-#' saproj::snapshot_library()
+#' # saproj::snapshot_library()
 snapshot_library <- function(proj_libpath = .libPaths()[1], replace_snapshot = FALSE) {
     
     # determine allowed outcomes
@@ -199,7 +201,7 @@ snapshot_library <- function(proj_libpath = .libPaths()[1], replace_snapshot = F
 #' @family functions for maintaining project package libraries
 #' @export
 #' @examples
-#' saproj::view_library()
+#' # saproj::view_library()
 view_library <- function(library_path = .libPaths()[1]) {
     
     # print library path
@@ -238,7 +240,7 @@ view_library <- function(library_path = .libPaths()[1]) {
 #' @import dplyr
 #' @export
 #' @examples
-#' saproj::compare_repo_snapshot
+#' # saproj::compare_repo_snapshot
 compare_repo_snapshot <- function(repos = getOption("repos")) {
     
     # get details about snapshot packages
@@ -296,7 +298,7 @@ compare_repo_snapshot <- function(repos = getOption("repos")) {
 #' @import dplyr
 #' @export
 #' @examples
-#' saproj::restore_library()
+#' # saproj::restore_library()
 restore_library <- function(
     proj_libpath = .libPaths()[1], repos = getOption("repos"), override_version = FALSE,  
     use_devtools = FALSE, devtools_repo = "https://cran.rstudio.com"
@@ -347,9 +349,8 @@ restore_library <- function(
     
     # install selected packages    
     if (use_devtools) {
-        # install devtools if it isn't available
         if (!requireNamespace("devtools", quietly = TRUE)) {
-            install.packages("devtools", repos = repos)
+            stop("You'll need to install package devtools", call. = FALSE)
         }
         # install snapshotted packages with specified versions
         for (i in seq_along(pkgs_to_install$Package)) {

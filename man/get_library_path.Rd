@@ -24,7 +24,7 @@ This is intended to avoid a situation where the user accidently inherits
 an existing library.
 }
 \examples{
-get_library_path("example-existing-project")
+# get_library_path("example-existing-project")
 }
 \seealso{
 Other internal helper functions: \code{\link{allow_outcome}}

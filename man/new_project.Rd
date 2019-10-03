@@ -22,7 +22,7 @@ This is a convenience function, intended for use with a new analysis.
 It calls \code{\link{setup_project}}, and also makes a few template folders.
 }
 \examples{
-saproj::new_project("new-project-name")
+# saproj::new_project("new-project-name")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_section}},

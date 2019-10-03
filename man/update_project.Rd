@@ -23,8 +23,8 @@ would be useful (for example) if you want to adapt code/data of an
 existing project for a new project.
 }
 \examples{
-saproj::update_project(project_library = "new-project-name")
-saproj::update_project(r_version = "3.4.3")
+# saproj::update_project(project_library = "new-project-name")
+# saproj::update_project(r_version = "3.4.3")
 }
 \seealso{
 Other functions for setting up projects: \code{\link{new_project}},

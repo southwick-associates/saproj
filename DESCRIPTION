@@ -1,7 +1,7 @@
 Package: saproj
 Type: Package
 Title: Southwick R Project Tools
-Version: 2.0
+Version: 2.1
 Author: Dan Kary
 Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
 Description: Provides functions & file templates to setup and maintain R-based Southwick 
@@ -10,14 +10,14 @@ Description: Provides functions & file templates to setup and maintain R-based S
 License: Intended for Southwick internal use
 Encoding: UTF-8
 Depends:
-    R (>= 3.3.1)
+    R (>= 3.3)
 Imports:
-    rmarkdown (>= 1.0),
     stringr (>= 1.0.0),
     dplyr (>= 0.5.0)
 LazyData: TRUE
 RoxygenNote: 6.1.0
 Suggests: 
+    devtools,
     knitr,
     rmarkdown
 VignetteBuilder: knitr

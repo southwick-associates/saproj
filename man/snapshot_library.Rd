@@ -21,7 +21,7 @@ packages. The project library can be restored on a different machine using
 \code{\link{restore_library}}
 }
 \examples{
-saproj::snapshot_library()
+# saproj::snapshot_library()
 }
 \seealso{
 Other functions for maintaining project package libraries: \code{\link{restore_library}},

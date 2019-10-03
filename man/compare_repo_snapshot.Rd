@@ -22,7 +22,7 @@ There are 3 possible outcomes for each package comparison:
 }
 }
 \examples{
-saproj::compare_repo_snapshot
+# saproj::compare_repo_snapshot
 }
 \seealso{
 Other helper functions for checking project libraries: \code{\link{compare_library_snapshot}}
