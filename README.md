@@ -1,7 +1,9 @@
 
 # saproj
 
-The basic intent of package saproj is to provide a simple set of functions for  maintaining package libraries. I made this functionality because I wasn't satisfied with current offerings (packrat, checkpoint). It's intended for Southwick internal use only.
+The basic intent of package saproj is to provide a simple set of functions for  maintaining package libraries. I made this functionality because I wasn't satisfied with current offerings (packrat, checkpoint). It's intended to work with the [Southwick R-Setup](https://github.com/southwick-associates/R-setup) and was built for Southwick internal use only.
+
+*Feb 2020 Note: A new package ([renv](https://rstudio.github.io/renv/index.html)) appears to address the issues I've had with previous dependency management solutions, and it may serve as a good replacement for saproj. It appears to have a similar philosophy to saproj and it's almost certainly more robust (having been developed by Rstudio folks).*
 
 ## Installation
 
