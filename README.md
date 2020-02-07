@@ -13,6 +13,8 @@ See [`vignette("saproj-intro")`](vignettes/saproj-intro.md) for a guide. The bas
 - Record library changes with `snapshot_library()`, which the user will be prompted to do at R project startup.
 - Reestablish on a new machine with `restore_library()`.
 
+Development planning/reference: [Development.md](Development.md) 
+
 ## Installation
 
 Saproj should be available in the [Southwick R-Setup](https://github.com/southwick-associates/R-setup). The most recent version can be installed from github:
