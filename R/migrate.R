@@ -20,6 +20,9 @@ to_renv <- function(
     files = c(".Rprofile", "snapshot-library.csv")
 ) {
     archive_project(files)
+    if (!any(file.exists(file.path("saproj", files)))) {
+        stop("No specified files are available to run migration", call. = FALSE)
+    }
     # TODO: update renv lockfile with necessary specifications
     # - R version
     # - package info
@@ -38,7 +41,8 @@ to_renv <- function(
 #' @export
 archive_project <- function(files = c(".Rprofile", "snapshot-library.csv")) {
     if (file.exists("saproj")) {
-        stop("Whoa there, the saproj folder already exists", call. = FALSE)
+        message("The saproj folder already exists & no files were archived")
+        return(invisible())
     }
     if (!any(file.exists(files))) {
         message("No files to migrate")
