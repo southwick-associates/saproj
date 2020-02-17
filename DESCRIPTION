@@ -1,7 +1,7 @@
 Package: saproj
 Type: Package
 Title: Southwick R Project Tools
-Version: 2.1
+Version: 2.2
 Author: Dan Kary
 Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
 Description: Provides functions & file templates to setup and maintain R-based Southwick 
