@@ -8,15 +8,17 @@
 #' \code{\link{archive_project}} in case they need to be retrieved in the future. 
 #' An renv lockfile will be created for use with renv::restore().
 #' 
-#' @param r_version R version to be used with renv. If you update to a new version,
-#' there is a small possibility that breaking changes will be introduced.
+#' @param update_r If TRUE, your default R version will be used for renv. If you 
+#' update to a new version, there is a small possibility that breaking changes 
+#' will be introduced.
 #' @param update_packages If TRUE, will use new package versions instead of those
-#' specified in snapshot-library.csv
+#' specified in snapshot-library.csv. The chances of breaking changes are greater
+#' than those related to R version upates.
 #' @inheritParams archive_project
 #' @family functions for migrating to renv
 #' @export
 to_renv <- function(
-    r_version = NULL, update_packages = FALSE,
+    update_r = FALSE, update_packages = FALSE,
     files = c(".Rprofile", "snapshot-library.csv")
 ) {
     archive_project(files)
@@ -26,6 +28,9 @@ to_renv <- function(
     # TODO: update renv lockfile with necessary specifications
     # - R version
     # - package info
+    
+    # need to also consider packages installed as part of R Setup
+    # - dplyr, others?
     
     # probably include a message like "Success: use renv::restore() to build renv library"
 }

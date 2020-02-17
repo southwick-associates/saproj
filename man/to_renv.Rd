@@ -4,15 +4,17 @@
 \alias{to_renv}
 \title{Convert saproj project settings for use with package renv}
 \usage{
-to_renv(r_version = NULL, update_packages = FALSE,
+to_renv(update_r = FALSE, update_packages = FALSE,
   files = c(".Rprofile", "snapshot-library.csv"))
 }
 \arguments{
-\item{r_version}{R version to be used with renv. If you update to a new version,
-there is a small possibility that breaking changes will be introduced.}
+\item{update_r}{If TRUE, your default R version will be used for renv. If you 
+update to a new version, there is a small possibility that breaking changes 
+will be introduced.}
 
 \item{update_packages}{If TRUE, will use new package versions instead of those
-specified in snapshot-library.csv}
+specified in snapshot-library.csv. The chances of breaking changes are greater
+than those related to R version upates.}
 
 \item{files}{files to be archived}
 }
