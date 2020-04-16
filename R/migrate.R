@@ -22,7 +22,10 @@ archive_saproj <- function(
     files_exist <- file.exists(file.path(path, files_to_move))
     files_to_move <- files_to_move[files_exist]
     for (i in files_to_move) {
-        file.rename(i, file.path(path, "saproj_archive", i))
+        file.rename(
+            file.path(path, i),  
+            file.path(path, "saproj_archive", i)
+        )
     }
 }
 
