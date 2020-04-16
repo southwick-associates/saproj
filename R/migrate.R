@@ -42,7 +42,7 @@ archive_saproj <- function(
 #' @export
 install_saproj_packages <- function(
     snapshot = file.path("saproj_archive", "snapshot-library.csv"),
-    exclude = c("sadash@1.0.4")
+    exclude = c("sadash@1.0.4", "urbnmapr@0.0.0.9002", "sf@0.6-3")
 ) {
     packages <- utils::read.csv(snapshot, stringsAsFactors = FALSE)
     packages$install <- paste0(packages$Package, "@", packages$Version)

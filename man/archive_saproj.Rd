@@ -5,12 +5,12 @@
 \title{Archive the saproj settings in an "saproj_archive" folder}
 \usage{
 archive_saproj(
-  path = getwd(),
+  project_dir,
   files_to_move = c(".Rprofile", "snapshot-library.csv")
 )
 }
 \arguments{
-\item{path}{file path to project (defaults to working directory)}
+\item{project_dir}{file path to project}
 
 \item{files_to_move}{files to be archived}
 }

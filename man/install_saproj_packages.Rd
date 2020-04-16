@@ -6,14 +6,14 @@
 \usage{
 install_saproj_packages(
   snapshot = file.path("saproj_archive", "snapshot-library.csv"),
-  exclude = c("sadash@1.0.4")
+  exclude = c("sadash@1.0.4", "urbnmapr@0.0.0.9002", "sf@0.6-3")
 )
 }
 \arguments{
+\item{snapshot}{path to snapshot-library.csv used by saproj}
+
 \item{exclude}{optionally exclude specified packages. Useful if
 \code{\link[renv]{install}} can't find the specified package and produces a cryptic error.}
-
-\item{sanpshot}{path to snapshot-library.csv used by saproj}
 }
 \description{
 To be called following \code{\link{archive_saproj}} and renv \code{\link[renv]{init}}.

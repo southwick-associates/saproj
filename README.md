@@ -5,9 +5,23 @@ A package that provides functions for  maintaining package libraries. Written be
 
 ## Deprecated
 
-As of Feb 2020, I consider this approach deprecated. I recommend [package renv](https://rstudio.github.io/renv/index.html). See the vignette below if you want to migrate the saproj settings for a project over to renv:
+As of Feb 2020, I consider this approach deprecated. I recommend [package renv](https://rstudio.github.io/renv/index.html). 
 
-- TODO: [Migrate to renv] using `archive_saproj()` and `install_saproj_packages()`
+### Migration
+
+You can migrate the saproj settings for an existing project over to renv:
+
+```r
+# arhive the saproj tracking files
+project_directory <- "E:/SA/Projects/Data-Dashboards/SC/2019-q4"
+saproj::archive_saproj(project_directory)
+
+# open .Rproj in the project_directory & setup packages in renv
+renv::init(bare = TRUE)
+renv::install("southwick-associates/saproj")
+saproj::install_saproj_packages()
+renv::snapshot()
+```
 
 ## Installation
 
