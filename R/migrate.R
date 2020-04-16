@@ -3,28 +3,28 @@
 
 #' Archive the saproj settings in an "saproj_archive" folder
 #' 
-#' @param path file path to project (defaults to working directory)
+#' @param project_dir file path to project
 #' @param files_to_move files to be archived
 #' @family functions for migrating to renv
 #' @export
 archive_saproj <- function(
-    path = getwd(), files_to_move = c(".Rprofile", "snapshot-library.csv")
+    project_dir, files_to_move = c(".Rprofile", "snapshot-library.csv")
 ) {
-    if (file.exists(file.path(path, "saproj_archive"))) {
+    if (file.exists(file.path(project_dir, "saproj_archive"))) {
         message("The saproj_archive folder already exists & no files were archived")
         return(invisible())
     }
-    if (!any(file.exists(file.path(path, files_to_move)))) {
+    if (!any(file.exists(file.path(project_dir, files_to_move)))) {
         message("No files to migrate")
         return(invisible())
     }
-    dir.create(file.path(path, "saproj_archive"))
-    files_exist <- file.exists(file.path(path, files_to_move))
+    dir.create(file.path(project_dir, "saproj_archive"))
+    files_exist <- file.exists(file.path(project_dir, files_to_move))
     files_to_move <- files_to_move[files_exist]
     for (i in files_to_move) {
         file.rename(
-            file.path(path, i),  
-            file.path(path, "saproj_archive", i)
+            file.path(project_dir, i),  
+            file.path(project_dir, "saproj_archive", i)
         )
     }
 }
@@ -35,7 +35,7 @@ archive_saproj <- function(
 #' If you get a cryptic error such as "Cannot open URL...", you can excluded the 
 #' offending package-version with the exclude argument
 #' 
-#' @param sanpshot path to snapshot-library.csv used by saproj
+#' @param snapshot path to snapshot-library.csv used by saproj
 #' @param exclude optionally exclude specified packages. Useful if
 #' \code{\link[renv]{install}} can't find the specified package and produces a cryptic error.
 #' @family functions for migrating to renv
