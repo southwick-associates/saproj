@@ -19,7 +19,8 @@ project-specific library.
 # saproj::view_library()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{restore_library}},
-  \code{\link{snapshot_library}}
+Other functions for maintaining project package libraries: 
+\code{\link{restore_library}()},
+\code{\link{snapshot_library}()}
 }
 \concept{functions for maintaining project package libraries}

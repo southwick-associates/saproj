@@ -4,8 +4,11 @@
 \alias{setup_project}
 \title{Set project parameters for an in-progress analysis}
 \usage{
-setup_project(project_library, inherit_library = FALSE,
-  r_version = paste(R.version$major, R.version$minor, sep = "."))
+setup_project(
+  project_library,
+  inherit_library = FALSE,
+  r_version = paste(R.version$major, R.version$minor, sep = ".")
+)
 }
 \arguments{
 \item{project_library}{character: Name of project library to use for project packages.
@@ -25,8 +28,10 @@ and (2) project library. This information will be stored in '.Rprofile'.
 # saproj::setup_project("new-project-name")
 }
 \seealso{
-Other functions for setting up projects: \code{\link{new_project}},
-  \code{\link{new_section}}, \code{\link{update_project}},
-  \code{\link{view_projects}}
+Other functions for setting up projects: 
+\code{\link{new_project}()},
+\code{\link{new_section}()},
+\code{\link{update_project}()},
+\code{\link{view_projects}()}
 }
 \concept{functions for setting up projects}

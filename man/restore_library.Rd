@@ -4,9 +4,13 @@
 \alias{restore_library}
 \title{Restore a project library using a snapshot}
 \usage{
-restore_library(proj_libpath = .libPaths()[1],
-  repos = getOption("repos"), override_version = FALSE,
-  use_devtools = FALSE, devtools_repo = "https://cran.rstudio.com")
+restore_library(
+  proj_libpath = .libPaths()[1],
+  repos = getOption("repos"),
+  override_version = FALSE,
+  use_devtools = FALSE,
+  devtools_repo = "https://cran.rstudio.com"
+)
 }
 \arguments{
 \item{proj_libpath}{character: The location of the project library 
@@ -33,7 +37,8 @@ on a different computer. It installs the packages listed in 'project-snapshot.cs
 # saproj::restore_library()
 }
 \seealso{
-Other functions for maintaining project package libraries: \code{\link{snapshot_library}},
-  \code{\link{view_library}}
+Other functions for maintaining project package libraries: 
+\code{\link{snapshot_library}()},
+\code{\link{view_library}()}
 }
 \concept{functions for maintaining project package libraries}

@@ -33,7 +33,8 @@ to the comparison:
 # saproj::compare_library_snapshot()
 }
 \seealso{
-Other helper functions for checking project libraries: \code{\link{compare_repo_snapshot}}
+Other helper functions for checking project libraries: 
+\code{\link{compare_repo_snapshot}()}
 }
 \concept{helper functions for checking project libraries}
 \keyword{internal}

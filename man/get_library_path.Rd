@@ -27,7 +27,8 @@ an existing library.
 # get_library_path("example-existing-project")
 }
 \seealso{
-Other internal helper functions: \code{\link{allow_outcome}}
+Other internal helper functions: 
+\code{\link{allow_outcome}()}
 }
 \concept{internal helper functions}
 \keyword{internal}

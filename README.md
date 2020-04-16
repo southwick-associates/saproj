@@ -5,7 +5,9 @@ A package that provides functions for  maintaining package libraries. Written be
 
 ## Deprecated
 
-As of Feb 2020, I consider this approach deprecated. I recommend [package renv](https://rstudio.github.io/renv/index.html) and will add an `saproj::to_renv()` function to help migrate the necessary dependency specifications for use with renv (i.e., if you need to update an older workflow which used saproj for a new project).
+As of Feb 2020, I consider this approach deprecated. I recommend [package renv](https://rstudio.github.io/renv/index.html). See the vignette below if you want to migrate the saproj settings for a project over to renv:
+
+- TODO: [Migrate to renv] using `archive_saproj()` and `install_saproj_packages()`
 
 ## Installation
 

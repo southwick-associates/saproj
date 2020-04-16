@@ -4,8 +4,11 @@
 \alias{new_project}
 \title{Populate a project with default directories and files}
 \usage{
-new_project(project_library, inherit_library = FALSE,
-  r_version = paste(R.version$major, R.version$minor, sep = "."))
+new_project(
+  project_library,
+  inherit_library = FALSE,
+  r_version = paste(R.version$major, R.version$minor, sep = ".")
+)
 }
 \arguments{
 \item{project_library}{character: Name of project library to use for project packages.
@@ -25,8 +28,10 @@ It calls \code{\link{setup_project}}, and also makes a few template folders.
 # saproj::new_project("new-project-name")
 }
 \seealso{
-Other functions for setting up projects: \code{\link{new_section}},
-  \code{\link{setup_project}},
-  \code{\link{update_project}}, \code{\link{view_projects}}
+Other functions for setting up projects: 
+\code{\link{new_section}()},
+\code{\link{setup_project}()},
+\code{\link{update_project}()},
+\code{\link{view_projects}()}
 }
 \concept{functions for setting up projects}

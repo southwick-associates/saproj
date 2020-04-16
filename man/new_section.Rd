@@ -21,8 +21,10 @@ and also include corresponding sub-folders in "data/" and "out/".
 # saproj::new_section("1-first-section")
 }
 \seealso{
-Other functions for setting up projects: \code{\link{new_project}},
-  \code{\link{setup_project}},
-  \code{\link{update_project}}, \code{\link{view_projects}}
+Other functions for setting up projects: 
+\code{\link{new_project}()},
+\code{\link{setup_project}()},
+\code{\link{update_project}()},
+\code{\link{view_projects}()}
 }
 \concept{functions for setting up projects}

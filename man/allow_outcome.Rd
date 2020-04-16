@@ -27,7 +27,8 @@ library(dplyr)
 # compare_library_snapshot() \%>\% allow_outcome("library_behind")
 }
 \seealso{
-Other internal helper functions: \code{\link{get_library_path}}
+Other internal helper functions: 
+\code{\link{get_library_path}()}
 }
 \concept{internal helper functions}
 \keyword{internal}

@@ -4,8 +4,11 @@
 \alias{update_project}
 \title{Update project R version or package library}
 \usage{
-update_project(project_library = NULL, r_version = NULL,
-  inherit_library = FALSE)
+update_project(
+  project_library = NULL,
+  r_version = NULL,
+  inherit_library = FALSE
+)
 }
 \arguments{
 \item{project_library}{character: New project library to use. Defaults
@@ -27,8 +30,10 @@ existing project for a new project.
 # saproj::update_project(r_version = "3.4.3")
 }
 \seealso{
-Other functions for setting up projects: \code{\link{new_project}},
-  \code{\link{new_section}}, \code{\link{setup_project}},
-  \code{\link{view_projects}}
+Other functions for setting up projects: 
+\code{\link{new_project}()},
+\code{\link{new_section}()},
+\code{\link{setup_project}()},
+\code{\link{view_projects}()}
 }
 \concept{functions for setting up projects}

@@ -1,7 +1,7 @@
 Package: saproj
 Type: Package
 Title: Southwick R Project Tools
-Version: 2.2
+Version: 2.3
 Author: Dan Kary
 Maintainer: Dan Kary <Dan@SouthwickAssociates.com>
 Description: Provides functions & file templates to setup and maintain R-based Southwick 
@@ -15,7 +15,7 @@ Imports:
     stringr (>= 1.0.0),
     dplyr (>= 0.5.0)
 LazyData: TRUE
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.0
 Suggests: 
     devtools,
     knitr,
