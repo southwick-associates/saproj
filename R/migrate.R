@@ -19,10 +19,10 @@ archive_saproj <- function(
         return(invisible())
     }
     dir.create(file.path(path, "saproj_archive"))
-    files_exist <- file.exists(files_to_move)
+    files_exist <- file.exists(file.path(path, files_to_move))
     files_to_move <- files_to_move[files_exist]
     for (i in files_to_move) {
-        file.rename(i, file.path("saproj_archive", i))
+        file.rename(i, file.path(path, "saproj_archive", i))
     }
 }
 
